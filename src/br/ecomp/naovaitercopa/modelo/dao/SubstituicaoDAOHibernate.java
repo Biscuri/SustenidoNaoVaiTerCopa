@@ -3,7 +3,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import javax.management.Query;
+import org.hibernate.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -92,10 +92,10 @@ public class SubstituicaoDAOHibernate implements SubstituicaoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("delete from Substituicao");
+			Query consulta = sessao.createQuery("delete from Substituicao");
 
 			transacao = sessao.beginTransaction();
-			((org.hibernate.Query) consulta).executeUpdate();
+			consulta.executeUpdate();
 			transacao.commit();
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel excluir os substituicaos. Erro: " + e.getMessage());
@@ -121,7 +121,7 @@ public class SubstituicaoDAOHibernate implements SubstituicaoDAO {
 			Query consulta = (Query) sessao.createQuery("from Substituicao");
 
 			transacao = sessao.beginTransaction();
-			resultado = (List<Substituicao>) ((org.hibernate.Query) consulta).list();
+			resultado = (List<Substituicao>)consulta.list();
 			transacao.commit();
 			return resultado;
 		} 
@@ -147,11 +147,11 @@ public class SubstituicaoDAOHibernate implements SubstituicaoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Substituicao where nome = :parametro");
-			((org.hibernate.Query) consulta).setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Substituicao where nome = :parametro");
+			consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
-			substituicao = (Substituicao) ((org.hibernate.Query) consulta).uniqueResult();
+			substituicao = (Substituicao) consulta.uniqueResult();
 			transacao.commit();
 			return substituicao;
 			

@@ -3,7 +3,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import javax.management.Query;
+import org.hibernate.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -92,10 +92,10 @@ public class GolDAOHibernate implements GolDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("delete from Gol");
+			Query consulta =  sessao.createQuery("delete from Gol");
 
 			transacao = sessao.beginTransaction();
-			((org.hibernate.Query) consulta).executeUpdate();
+			consulta.executeUpdate();
 			transacao.commit();
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel excluir os gols. Erro: " + e.getMessage());
@@ -118,10 +118,10 @@ public class GolDAOHibernate implements GolDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Gol");
+			Query consulta = sessao.createQuery("from Gol");
 
 			transacao = sessao.beginTransaction();
-			resultado = (List<Gol>) ((org.hibernate.Query) consulta).list();
+			resultado = (List<Gol>) consulta.list();
 			transacao.commit();
 			return resultado;
 		} 
@@ -147,11 +147,11 @@ public class GolDAOHibernate implements GolDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Gol where nome = :parametro");
-			((org.hibernate.Query) consulta).setString("parametro", nome);
+			Query consulta =  sessao.createQuery("from Gol where nome = :parametro");
+			consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
-			gol = (Gol) ((org.hibernate.Query) consulta).uniqueResult();
+			gol = (Gol) consulta.uniqueResult();
 			transacao.commit();
 			return gol;
 			

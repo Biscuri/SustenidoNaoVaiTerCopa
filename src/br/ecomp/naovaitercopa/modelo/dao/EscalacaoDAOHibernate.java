@@ -3,7 +3,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import javax.management.Query;
+import org.hibernate.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -92,10 +92,10 @@ public class EscalacaoDAOHibernate implements EscalacaoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("delete from Escalacao");
+			Query consulta = sessao.createQuery("delete from Escalacao");
 
 			transacao = sessao.beginTransaction();
-			((org.hibernate.Query) consulta).executeUpdate();
+			consulta.executeUpdate();
 			transacao.commit();
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel excluir os escalacaos. Erro: " + e.getMessage());
@@ -118,10 +118,10 @@ public class EscalacaoDAOHibernate implements EscalacaoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Escalacao");
+			Query consulta = sessao.createQuery("from Escalacao");
 
 			transacao = sessao.beginTransaction();
-			resultado = (List<Escalacao>) ((org.hibernate.Query) consulta).list();
+			resultado = (List<Escalacao>) consulta.list();
 			transacao.commit();
 			return resultado;
 		} 
@@ -147,8 +147,8 @@ public class EscalacaoDAOHibernate implements EscalacaoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Escalacao where nome = :parametro");
-			((org.hibernate.Query) consulta).setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Escalacao where nome = :parametro");
+			consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
 			escalacao = (Escalacao) ((org.hibernate.Query) consulta).uniqueResult();

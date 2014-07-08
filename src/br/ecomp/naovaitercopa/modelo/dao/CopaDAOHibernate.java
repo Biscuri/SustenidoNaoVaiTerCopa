@@ -3,7 +3,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import javax.management.Query;
+import org.hibernate.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -118,7 +118,7 @@ public class CopaDAOHibernate implements CopaDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Copa");
+			Query consulta = sessao.createQuery("from Copa");
 
 			transacao = sessao.beginTransaction();
 			resultado = (List<Copa>) ((org.hibernate.Query) consulta).list();
@@ -147,8 +147,8 @@ public class CopaDAOHibernate implements CopaDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Copa where nome = :parametro");
-			((org.hibernate.Query) consulta).setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Copa where nome = :parametro");
+			consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
 			copa = (Copa) ((org.hibernate.Query) consulta).uniqueResult();

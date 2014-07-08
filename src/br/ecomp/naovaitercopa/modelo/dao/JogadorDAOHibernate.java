@@ -3,7 +3,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import javax.management.Query;
+import org.hibernate.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -92,10 +92,10 @@ public class JogadorDAOHibernate implements JogadorDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("delete from Jogador");
+			Query consulta =  sessao.createQuery("delete from Jogador");
 
 			transacao = sessao.beginTransaction();
-			((org.hibernate.Query) consulta).executeUpdate();
+			consulta.executeUpdate();
 			transacao.commit();
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel excluir os jogadors. Erro: " + e.getMessage());
@@ -118,10 +118,10 @@ public class JogadorDAOHibernate implements JogadorDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Jogador");
+			Query consulta =  sessao.createQuery("from Jogador");
 
 			transacao = sessao.beginTransaction();
-			resultado = (List<Jogador>) ((org.hibernate.Query) consulta).list();
+			resultado = (List<Jogador>)  consulta.list();
 			transacao.commit();
 			return resultado;
 		} 
@@ -147,11 +147,11 @@ public class JogadorDAOHibernate implements JogadorDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Jogador where nome = :parametro");
-			((org.hibernate.Query) consulta).setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Jogador where nome = :parametro");
+			 consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
-			jogador = (Jogador) ((org.hibernate.Query) consulta).uniqueResult();
+			jogador = (Jogador)  consulta.uniqueResult();
 			transacao.commit();
 			return jogador;
 			

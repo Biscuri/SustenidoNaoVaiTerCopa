@@ -3,11 +3,12 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import javax.management.Query;
+
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.Query;
 
 import br.ecomp.naovaitercopa.modelo.Pais;
 import br.ecomp.naovaitercopa.util.HibernateUtil;
@@ -147,8 +148,8 @@ public class PaisDAOHibernate implements PaisDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Pais where nome = :parametro");
-			((org.hibernate.Query) consulta).setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Pais where nome = :parametro");
+			consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
 			pais = (Pais) ((org.hibernate.Query) consulta).uniqueResult();

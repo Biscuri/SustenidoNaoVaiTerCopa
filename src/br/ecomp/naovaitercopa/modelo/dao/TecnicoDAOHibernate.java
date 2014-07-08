@@ -3,7 +3,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import javax.management.Query;
+import org.hibernate.Query;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -92,10 +92,10 @@ public class TecnicoDAOHibernate implements TecnicoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("delete from Tecnico");
+			Query consulta =  sessao.createQuery("delete from Tecnico");
 
 			transacao = sessao.beginTransaction();
-			((org.hibernate.Query) consulta).executeUpdate();
+			consulta.executeUpdate();
 			transacao.commit();
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel excluir os tecnicos. Erro: " + e.getMessage());
@@ -118,10 +118,10 @@ public class TecnicoDAOHibernate implements TecnicoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Tecnico");
+			Query consulta = sessao.createQuery("from Tecnico");
 
 			transacao = sessao.beginTransaction();
-			resultado = (List<Tecnico>) ((org.hibernate.Query) consulta).list();
+			resultado = (List<Tecnico>) consulta.list();
 			transacao.commit();
 			return resultado;
 		} 
@@ -147,11 +147,11 @@ public class TecnicoDAOHibernate implements TecnicoDAO {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = (Query) sessao.createQuery("from Tecnico where nome = :parametro");
-			((org.hibernate.Query) consulta).setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Tecnico where nome = :parametro");
+			consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
-			tecnico = (Tecnico) ((org.hibernate.Query) consulta).uniqueResult();
+			tecnico = (Tecnico) consulta.uniqueResult();
 			transacao.commit();
 			return tecnico;
 			
