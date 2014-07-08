@@ -21,7 +21,8 @@ public class Pais implements Serializable {
 	
 	private String nome;
 	private String continente;
-	private LinkedList<Selecao> selecoes;
+	private LinkedList<Selecao> selecoes = new LinkedList<Selecao>();
+        
 
 	public Long getId() {
 		return id;
@@ -54,5 +55,15 @@ public class Pais implements Serializable {
 	public void setSelecoes(LinkedList<Selecao> selecoes) {
 		this.selecoes = selecoes;
 	}
+        
+        public void addSelecao(Selecao nova){
+            selecoes.add(nova);
+        }
+        
+        public void removeSelecao(Selecao remove){
+            selecoes.remove(remove);
+        }
+        
+        
 
 }

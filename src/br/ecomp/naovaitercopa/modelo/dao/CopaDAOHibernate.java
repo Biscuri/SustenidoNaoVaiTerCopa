@@ -142,13 +142,13 @@ public class CopaDAOHibernate implements CopaDAO {
 	 * @see br.ecomp.naivaitercopa.modelo.CopaDAO#buscarCopa(java.lang.String)
 	 */
 	@Override
-	public Copa buscarCopa(String nome) {
+	public Copa buscarCopa(String nomeSede) {
 		Copa copa = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
 			Query consulta = sessao.createQuery("from Copa where nome = :parametro");
-			consulta.setString("parametro", nome);
+			consulta.setString("parametro", nomeSede);
 
 			transacao = sessao.beginTransaction();
 			copa = (Copa) ((org.hibernate.Query) consulta).uniqueResult();

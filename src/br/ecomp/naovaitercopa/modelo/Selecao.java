@@ -18,11 +18,12 @@ public class Selecao implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-
+        
+        private String nome;
 	private String grupo;
 	private int ano;
 	private int posicao;
-	private LinkedList<Jogador> jogadores;
+	private LinkedList<Jogador> jogadores = new LinkedList<Jogador>();
 	private Tecnico tecnico;
 	private Pais pais;
 	private LinkedList<Gol> gols;
@@ -91,4 +92,21 @@ public class Selecao implements Serializable {
 		this.gols = gols;
 	}
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+   
+    public void addJogador(Jogador jogador){
+        jogadores.add(jogador);
+    }
+    
+    public void removeJogador(Jogador jogador){
+        jogadores.remove(jogador);
+    }
+
+        
 }

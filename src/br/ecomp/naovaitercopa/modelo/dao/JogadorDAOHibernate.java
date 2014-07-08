@@ -148,10 +148,11 @@ public class JogadorDAOHibernate implements JogadorDAO {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
 			Query consulta = sessao.createQuery("from Jogador where nome = :parametro");
-			 consulta.setString("parametro", nome);
+			consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
 			jogador = (Jogador)  consulta.uniqueResult();
+                       
 			transacao.commit();
 			return jogador;
 			
@@ -166,5 +167,4 @@ public class JogadorDAOHibernate implements JogadorDAO {
 		}
 		return jogador;
 	}
-
 }

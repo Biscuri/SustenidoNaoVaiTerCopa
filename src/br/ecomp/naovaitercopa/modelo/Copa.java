@@ -23,8 +23,8 @@ public class Copa implements Serializable{
 	
 	@OneToOne
 	private Pais pais;	
-	private LinkedList<Jogo> jogos;
-	private LinkedList<Selecao> selecoes;
+	private LinkedList<Jogo> jogos = new LinkedList<Jogo> ();
+	private LinkedList<Selecao> selecoes = new LinkedList<Selecao>();
 	
 	public Long getId() {
 		return id;
@@ -56,5 +56,21 @@ public class Copa implements Serializable{
 	public void setSelecoes(LinkedList<Selecao> selecoes) {
 		this.selecoes = selecoes;
 	}
+        
+        public void addSelecao(Selecao selecao){
+            selecoes.add(selecao);
+        }
+        
+        public void removeSelecoes(Selecao selecao){
+            selecoes.remove(selecao);
+        }
+        
+        public void addJogo(Jogo novo){
+            jogos.add(novo);
+        }
+        
+        public void removeJogo(Jogo remover){
+            jogos.remove(remover);
+        }
 
 }

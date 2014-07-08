@@ -8,9 +8,10 @@ public class Main {
 
 	public static void main(String[] args) {
             Controller novo = new Controller();
-            novo.CadastrarPais("Englaterra", "Europa");
-            novo.CadastrarPais("Englaterra", "Europa");
-            novo.CadastrarPais("Englaterra", "Europa");
+            novo.CadastrarPais("Inglaterra", "Acre");
+            novo.CadastrarPais("Inglaterra", "Acre");
+            novo.CadastrarPais("Inglaterra", "Acre");
+        
            
 	}
 

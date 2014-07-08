@@ -12,7 +12,7 @@ public interface CopaDAO {
 	
 	public void atualizar(Copa copa);
 	
-	public Copa buscarCopa(String nome);
+	public Copa buscarCopa(String nomePais);
 	
 	public List<Copa> listar();
 
