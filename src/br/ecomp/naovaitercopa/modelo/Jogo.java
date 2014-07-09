@@ -1,5 +1,6 @@
 package br.ecomp.naovaitercopa.modelo;
 
+import static br.ecomp.naovaitercopa.modelo.Jogo.fase.QUARTAS;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -19,17 +20,18 @@ public class Jogo implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-
+        
+        private String fase;
 	private Calendar data;
 	private String local;
-	private fase fase;
-	private LinkedList<Gol> gols;
+	private fase faseEnum;
+	private LinkedList<Gol> gols = new LinkedList<Gol>();
 	private Selecao selecaoA;
 	private Selecao selecaoB;
 	private Escalacao escalacaoA;
 	private Escalacao escalacaoB;
-	private LinkedList<Substituicao> substituicoesA;
-	private LinkedList<Substituicao> substituicoesB;
+	private LinkedList<Substituicao> substituicoesA = new LinkedList<Substituicao>();
+	private LinkedList<Substituicao> substituicoesB = new LinkedList<Substituicao>();
 
 	public Long getId() {
 		return id;
@@ -55,12 +57,12 @@ public class Jogo implements Serializable {
 		this.local = local;
 	}
 
-	public fase getFase() {
-		return fase;
+	public fase getFaseEnum() {
+		return faseEnum;
 	}
 
-	public void setFase(fase fase) {
-		this.fase = fase;
+	public void setFaseEnum(fase faseEnum) {
+		this.faseEnum = faseEnum;
 	}
 
 	public LinkedList<Gol> getGols() {
@@ -118,6 +120,59 @@ public class Jogo implements Serializable {
 	public void setSubstituicoesB(LinkedList<Substituicao> substituicoesB) {
 		this.substituicoesB = substituicoesB;
 	}
+
+        public String getFase() {
+        return fase;
+        }
+
+        public void setFase(String fase) {
+        this.fase = fase;
+        }
+        
+     @Override
+    public boolean equals(Object o) {
+        if (o instanceof Jogo) {
+            Jogo outro = (Jogo) o;
+            if (this.data == outro.getData()) {
+                if (this.selecaoA == outro.getSelecaoA()) {
+                    if (this.selecaoB == outro.getSelecaoB()) {
+                        if (this.local.equals(outro.getLocal())) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
+    
+    public void addGol(Gol novo){
+        gols.add(novo);      
+    }
+    
+    public void removeGol(Gol novo){
+        gols.remove(novo);
+    }
+    
+    public boolean addSubstituicaoA(Substituicao nova){
+        if(substituicoesA.size() < 3){
+            substituicoesA.add(nova);
+            return true;
+        }
+        return false;
+    }
+    
+        public boolean addSubstituicaoB(Substituicao nova){
+        if(substituicoesB.size() < 3){
+            substituicoesB.add(nova);
+            return true;
+        }
+        return false;
+    }
+    
+    
+        
 
 	public enum fase {
 		GRUPOS, OITAVAS, QUARTAS, SEMIS, FINAL, TERCEIROLUGAR

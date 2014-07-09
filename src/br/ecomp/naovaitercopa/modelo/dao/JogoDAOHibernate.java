@@ -142,16 +142,16 @@ public class JogoDAOHibernate implements JogoDAO {
 	 * @see br.ecomp.naivaitercopa.modelo.JogoDAO#buscarJogo(java.lang.String)
 	 */
 	@Override
-	public Jogo buscarJogo(String nome) {
+	public Jogo buscarJogo(String local) {
 		Jogo jogo = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta =  sessao.createQuery("from Jogo where nome = :parametro");
-			consulta.setString("parametro", nome);
+			Query consulta =  sessao.createQuery("from Jogo where local = :parametro");
+			consulta.setString("parametro", local);
 
 			transacao = sessao.beginTransaction();
-			jogo = (Jogo) ((org.hibernate.Query) consulta).uniqueResult();
+			jogo = (Jogo)consulta.uniqueResult();
 			transacao.commit();
 			return jogo;
 			

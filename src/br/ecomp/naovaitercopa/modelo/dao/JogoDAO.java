@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.ecomp.naovaitercopa.modelo.Jogo;
 
+
 public interface JogoDAO {
 	
 	public void adicionar(Jogo pais);
@@ -12,7 +13,7 @@ public interface JogoDAO {
 	
 	public void atualizar(Jogo pais);
 	
-	public Jogo buscarJogo(String nome);
+	public Jogo buscarJogo(String local);
 	
 	public List<Jogo> listar();
 

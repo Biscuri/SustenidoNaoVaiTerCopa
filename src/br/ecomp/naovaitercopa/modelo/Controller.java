@@ -1,12 +1,16 @@
 package br.ecomp.naovaitercopa.modelo;
 
 import br.ecomp.naovaitercopa.modelo.dao.CopaDAOHibernate;
+import br.ecomp.naovaitercopa.modelo.dao.GolDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.JogadorDAOHibernate;
+import br.ecomp.naovaitercopa.modelo.dao.JogoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.PaisDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.SelecaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.TecnicoDAOHibernate;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -22,6 +26,8 @@ public class Controller {
     TecnicoDAOHibernate tecnicoDB;
     SelecaoDAOHibernate selecaoDB;
     CopaDAOHibernate copaDB;
+    JogoDAOHibernate jogoDB;
+    GolDAOHibernate golDB;
     
     /**
      * Construtor da classe controller.
@@ -32,6 +38,8 @@ public class Controller {
         tecnicoDB = new TecnicoDAOHibernate();
         selecaoDB = new SelecaoDAOHibernate();
         copaDB = new CopaDAOHibernate();
+        jogoDB = new JogoDAOHibernate();
+        golDB = new GolDAOHibernate();
     }
     
     /**
@@ -181,11 +189,48 @@ public class Controller {
         }
         
     }
-      
-      public boolean CadastrarJogo(){
-          // Fazendo Saporra .-.
-          return false;
+      /**
+       * Metodo que cadastra um novo Jogo
+       * @param data data de realizacao da partida
+       * @param local onde a partida esta sendo realizada
+       * @param fase qual fase do campeonato ela esta sendo disputada
+       * @param selecaoA Selecao A na disputa
+       * @param selecaoB Selecao B na disputa
+       * @param play1 Escalacao de jogadores do time A
+       * @param play2 Escalacao de jogadores do time B
+       * @return true se foi possivel , false se nao
+       */
+      public boolean CadastrarJogo(Calendar data, String local, String fase,Selecao selecaoA, Selecao selecaoB, Escalacao play1, Escalacao play2){
+          Jogo novo = new Jogo();
+          novo.setData(data);
+          novo.setLocal(local);
+          novo.setSelecaoA(selecaoA);
+          novo.setSelecaoB(selecaoB);
+          novo.setEscalacaoA(play1);
+          novo.setEscalacaoB(play2);
+          Jogo busca = jogoDB.buscarJogo(fase);
+          if(busca == null){
+              jogoDB.adicionar(novo);
+              return true;
+          }
+          else{
+              if(!busca.equals(novo)){
+                  jogoDB.adicionar(novo);
+                  return true;
+              }
+              return false;
+          }  
       }
+      
+      public void CadastrarGol(Jogo jogo, Jogador jogador, boolean contra, Calendar tempo){
+          Gol novo = new Gol();
+          novo.setFoiContra(contra);
+          novo.setJogador(jogador);
+          novo.setTempo(tempo);
+         golDB.adicionar(novo);
+         jogo.addGol(novo);
+      }
+  
     
     
 }
