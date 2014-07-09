@@ -151,7 +151,7 @@ public class SelecaoDAOHibernate implements SelecaoDAO {
 			 consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
-			selecao = (Selecao) ((org.hibernate.Query) consulta).uniqueResult();
+			selecao = (Selecao) consulta.uniqueResult();
 			transacao.commit();
 			return selecao;
 			
@@ -166,5 +166,35 @@ public class SelecaoDAOHibernate implements SelecaoDAO {
 		}
 		return selecao;
 	}
+     /* (non-Javadoc)
+     * @see br.ecomp.naivaitercopa.modelo.SelecaoDAO#listar(int ano)
+     */
+    @Override
+    @SuppressWarnings({ "unchecked"})
+    public List<Selecao> listar(int ano) {
+        List<Selecao> resultado = null;
+		try {
+			sessao = HibernateUtil.getSessionFactory().openSession();
+
+			Query consulta = sessao.createQuery("from Selecao where ano = :parametro");
+                        consulta.setInteger("parametro", ano);
+
+			transacao = sessao.beginTransaction();
+			resultado = (List<Selecao>)  consulta.list();
+			transacao.commit();
+			return resultado;
+		} 
+		catch (HibernateException e) {
+			System.err.println("Nao foi possivel listar os selecaos. Erro: " + e.getMessage());
+			throw new HibernateException(e);
+		} 
+		finally {
+			try {
+				sessao.close();
+			} catch (Throwable e) {
+				System.err.println("Erro ao fechar operacao de listagem. Mensagem: " + e.getMessage());				
+			}
+		}
+    }
 
 }

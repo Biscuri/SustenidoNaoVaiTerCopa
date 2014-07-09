@@ -221,7 +221,13 @@ public class Controller {
               return false;
           }  
       }
-      
+      /**
+       * Cadastra um Gol em um jogo
+       * @param jogo jogo que o gol foi feito
+       * @param jogador jogador que fez o gol
+       * @param contra se o gol foi contra
+       * @param tempo em quanto tempo o jogo foi feito
+       */
       public void CadastrarGol(Jogo jogo, Jogador jogador, boolean contra, Calendar tempo){
           Gol novo = new Gol();
           novo.setFoiContra(contra);
@@ -230,7 +236,24 @@ public class Controller {
          golDB.adicionar(novo);
          jogo.addGol(novo);
       }
-  
+      
+
+      
+      public List listarPaisesCadastrados(){
+          return paisDB.listar();
+      }
+      
+      public List listarJogadoresCadastrados(){
+          return jogadorDB.listar();
+      }
+      
+      public List listarTecnicossCadastrados(){
+          return tecnicoDB.listar();
+      }
+      
+      public List listarSelecoes(int ano){
+          return selecaoDB.listar(ano);
+      }
     
     
 }

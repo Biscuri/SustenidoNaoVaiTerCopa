@@ -15,6 +15,8 @@ public interface SelecaoDAO {
 	public Selecao buscarSelecao(String nome);
 	
 	public List<Selecao> listar();
+        
+        public List<Selecao> listar(int ano);
 
 	void removerTodos();
 }
