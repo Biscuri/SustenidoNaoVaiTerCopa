@@ -1,15 +1,17 @@
 package br.ecomp.naovaitercopa.modelo.dao;
 
 
+import java.util.Calendar;
 import java.util.List;
 
-import org.hibernate.Query;
-
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import br.ecomp.naovaitercopa.modelo.Jogo;
+import br.ecomp.naovaitercopa.modelo.Jogo.fase;
+import br.ecomp.naovaitercopa.modelo.Selecao;
 import br.ecomp.naovaitercopa.util.HibernateUtil;
 
 public class JogoDAOHibernate implements JogoDAO {
@@ -141,9 +143,17 @@ public class JogoDAOHibernate implements JogoDAO {
 	/* (non-Javadoc)
 	 * @see br.ecomp.naivaitercopa.modelo.JogoDAO#buscarJogo(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Jogo buscarJogo(String local) {
-		Jogo jogo = null;
+	public Jogo buscarJogo(String local, Calendar data, Selecao selecaoA, Selecao selecaoB, fase fase) {
+		Jogo compare = new Jogo();
+		compare.setLocal(local);
+		compare.setData(data);
+		compare.setSelecaoA(selecaoA);
+		compare.setSelecaoB(selecaoB);
+		compare.setFase(fase);
+		List<Jogo> resultados = null;
+
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
@@ -151,9 +161,15 @@ public class JogoDAOHibernate implements JogoDAO {
 			consulta.setString("parametro", local);
 
 			transacao = sessao.beginTransaction();
-			jogo = (Jogo)consulta.uniqueResult();
+			resultados = (List<Jogo>) consulta.list();
 			transacao.commit();
-			return jogo;
+			
+			for (int i = 0 ; i < resultados.size() ; i++){
+				if (resultados.get(i).equals(compare)){
+					return resultados.get(i);
+				}
+			}
+			return null;
 			
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel buscar o jogo. Erro: " + e.getMessage());
@@ -164,7 +180,7 @@ public class JogoDAOHibernate implements JogoDAO {
 				System.err.println("Erro ao fechar operacao de busca. Mensagem: " + e.getMessage());				
 			}
 		}
-		return jogo;
+		return null;
 	}
 
 }

@@ -25,6 +25,7 @@ public class Jogador implements Serializable {
 	private Calendar dataNascimento;
 	private int numero;
 	private posicao posicao;
+	private Selecao selecao;
 	private LinkedList<Gol> gols;
 
 	public Long getId() {
@@ -75,10 +76,18 @@ public class Jogador implements Serializable {
 		this.posicao = posicao;
 	}
 
+	public Selecao getSelecao() {
+		return selecao;
+	}
+
+	public void setSelecao(Selecao selecao) {
+		this.selecao = selecao;
+	}
+
 	public enum posicao{
-		ZAGUEIRO, LATERALDIREITO, LATERALESQUERDO, LIBERO, VOLANTE, ALAESQUERDO, ALADIREITO,
-		MEIAARMADOR, MEDIOCENTRO, MEIOCAMPISTALATERALESQUERDO, MEIOCAMPISTALATERALDIREITO,
-		MEIAATACANTE, PONTA, SEGUNDOATACANTE, CENTROAVANTE
+		GOLEIRO, ZAGUEIRO, LATERALDIREITO, LATERALESQUERDO, LIBERO, VOLANTE, ALAESQUERDO,
+		ALADIREITO,	MEIAARMADOR, MEDIOCENTRO, MEIOCAMPISTALATERALESQUERDO,
+		MEIOCAMPISTALATERALDIREITO,	MEIAATACANTE, PONTA, SEGUNDOATACANTE, CENTROAVANTE
 	}
 
 }

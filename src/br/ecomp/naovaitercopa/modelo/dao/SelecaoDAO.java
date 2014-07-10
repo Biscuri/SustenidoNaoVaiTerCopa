@@ -12,7 +12,7 @@ public interface SelecaoDAO {
 	
 	public void atualizar(Selecao selecao);
 	
-	public Selecao buscarSelecao(String nome);
+	public Selecao buscarSelecao(String nome, int ano);
 	
 	public List<Selecao> listar();
         

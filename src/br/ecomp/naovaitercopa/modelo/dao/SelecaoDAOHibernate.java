@@ -4,7 +4,6 @@ package br.ecomp.naovaitercopa.modelo.dao;
 import java.util.List;
 
 import org.hibernate.Query;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -141,9 +140,13 @@ public class SelecaoDAOHibernate implements SelecaoDAO {
 	/* (non-Javadoc)
 	 * @see br.ecomp.naivaitercopa.modelo.SelecaoDAO#buscarSelecao(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public Selecao buscarSelecao(String nome) {
-		Selecao selecao = null;
+	public Selecao buscarSelecao(String nome, int ano) {
+		Selecao compare = new Selecao();
+		compare.setNome(nome);
+		compare.setAno(ano);
+		List<Selecao> resultados = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
@@ -151,9 +154,14 @@ public class SelecaoDAOHibernate implements SelecaoDAO {
 			 consulta.setString("parametro", nome);
 
 			transacao = sessao.beginTransaction();
-			selecao = (Selecao) consulta.uniqueResult();
+			resultados = (List<Selecao>) consulta.list();
 			transacao.commit();
-			return selecao;
+			for (int i = 0 ; i < resultados.size() ; i++){
+				if (resultados.get(i).equals(compare)){
+					return resultados.get(i);
+				}
+			}
+			return null;
 			
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel buscar o selecao. Erro: " + e.getMessage());
@@ -164,7 +172,7 @@ public class SelecaoDAOHibernate implements SelecaoDAO {
 				System.err.println("Erro ao fechar operacao de busca. Mensagem: " + e.getMessage());				
 			}
 		}
-		return selecao;
+		return null;
 	}
      /* (non-Javadoc)
      * @see br.ecomp.naivaitercopa.modelo.SelecaoDAO#listar(int ano)

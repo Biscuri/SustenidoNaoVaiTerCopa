@@ -135,7 +135,7 @@ public class Jogo implements Serializable {
             if (this.data == outro.getData()) {
                 if (this.selecaoA == outro.getSelecaoA()) {
                     if (this.selecaoB == outro.getSelecaoB()) {
-                        if (this.local.equals(outro.getLocal())) {
+                        if (this.fase.equals(outro.getFase())) {
                             return true;
                         }
                     }

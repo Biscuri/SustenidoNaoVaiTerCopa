@@ -3,6 +3,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 import java.util.List;
 
 import br.ecomp.naovaitercopa.modelo.Jogador;
+import br.ecomp.naovaitercopa.modelo.Selecao;
 
 public interface JogadorDAO {
 	
@@ -12,7 +13,7 @@ public interface JogadorDAO {
 	
 	public void atualizar(Jogador jogador);
 	
-	public Jogador buscarJogador(String nome);
+	public Jogador buscarJogador(String nome, Selecao selecao);
 	
 	public List<Jogador> listar();
 

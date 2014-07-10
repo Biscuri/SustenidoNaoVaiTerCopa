@@ -23,7 +23,7 @@ public class Selecao implements Serializable {
 	private String grupo;
 	private int ano;
 	private int posicao;
-	private LinkedList<Jogador> jogadores = new LinkedList<Jogador>();
+	private Jogador[] jogadores;
 	private Tecnico tecnico;
 	private Pais pais;
 	private LinkedList<Gol> gols;
@@ -60,11 +60,11 @@ public class Selecao implements Serializable {
 		this.posicao = posicao;
 	}
 
-	public LinkedList<Jogador> getJogadores() {
+	public Jogador[] getJogadores() {
 		return jogadores;
 	}
 
-	public void setJogadores(LinkedList<Jogador> jogadores) {
+	public void setJogadores(Jogador[] jogadores) {
 		this.jogadores = jogadores;
 	}
 
@@ -100,13 +100,41 @@ public class Selecao implements Serializable {
         this.nome = nome;
     }
    
-    public void addJogador(Jogador jogador){
-        jogadores.add(jogador);
+    @SuppressWarnings("unused")
+	public boolean addJogador(Jogador jogador){
+        if (jogadores[23] != null){
+        	for (int i = 0 ; i < 23 ; i++){
+        		if (jogadores[i] == null)
+        			jogadores[i] = jogador;
+        			return true;
+        	}
+        }
+        return false;
     }
     
-    public void removeJogador(Jogador jogador){
-        jogadores.remove(jogador);
+    public boolean removeJogador(Jogador jogador){
+    	for (int i = 0 ; i < 23 ; i++){
+    		if (jogadores[i].equals(jogador)){
+    			for (int j = i ; j < 22 ; j++){
+    				jogadores[j] = jogadores[j+1];
+    			}
+    			return true;
+    		}
+    	}
+    	return false;
     }
-
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Selecao) {
+            Selecao outra = (Selecao) o;
+            if (this.nome.equals(outra.getNome())) {
+                if (this.ano == outra.getAno()){
+                	return true;
+                }
+            }
+        }
+        return false;
+    }
         
 }
