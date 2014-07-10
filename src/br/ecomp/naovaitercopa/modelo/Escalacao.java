@@ -19,10 +19,8 @@ public class Escalacao implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	private Selecao a;
-	private Selecao b;
-	private LinkedList<Jogador> jogadoresA;
-	private LinkedList<Jogador> jogadoresB;
+	private Selecao selecao;
+	private LinkedList<Jogador> jogadores;
 
 	public Long getId() {
 		return id;
@@ -32,36 +30,19 @@ public class Escalacao implements Serializable {
 		this.id = id;
 	}
 
-	public Selecao getA() {
-		return a;
+	public Selecao getSelecao() {
+		return selecao;
 	}
 
-	public void setA(Selecao a) {
-		this.a = a;
+	public void setSelecao(Selecao selecao) {
+		this.selecao = selecao;
 	}
 
-	public Selecao getB() {
-		return b;
+	public LinkedList<Jogador> getJogadores() {
+		return jogadores;
 	}
 
-	public void setB(Selecao b) {
-		this.b = b;
+	public void setJogadores(LinkedList<Jogador> jogadores) {
+		this.jogadores = jogadores;
 	}
-
-	public LinkedList<Jogador> getJogadoresA() {
-		return jogadoresA;
-	}
-
-	public void setJogadoresA(LinkedList<Jogador> jogadoresA) {
-		this.jogadoresA = jogadoresA;
-	}
-
-	public LinkedList<Jogador> getJogadoresB() {
-		return jogadoresB;
-	}
-
-	public void setJogadoresB(LinkedList<Jogador> jogadoresB) {
-		this.jogadoresB = jogadoresB;
-	}
-
 }

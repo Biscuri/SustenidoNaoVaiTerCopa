@@ -8,10 +8,7 @@ import br.ecomp.naovaitercopa.modelo.dao.PaisDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.SelecaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.TecnicoDAOHibernate;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 
 
@@ -239,19 +236,19 @@ public class Controller {
       
 
       
-      public List listarPaisesCadastrados(){
+      public List<Pais> listarPaisesCadastrados(){
           return paisDB.listar();
       }
       
-      public List listarJogadoresCadastrados(){
+      public List<Jogador> listarJogadoresCadastrados(){
           return jogadorDB.listar();
       }
       
-      public List listarTecnicossCadastrados(){
+      public List<Tecnico> listarTecnicossCadastrados(){
           return tecnicoDB.listar();
       }
       
-      public List listarSelecoes(int ano){
+      public List<Selecao> listarSelecoes(int ano){
           return selecaoDB.listar(ano);
       }
     

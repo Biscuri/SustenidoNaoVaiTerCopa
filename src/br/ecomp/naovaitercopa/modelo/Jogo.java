@@ -1,6 +1,5 @@
 package br.ecomp.naovaitercopa.modelo;
 
-import static br.ecomp.naovaitercopa.modelo.Jogo.fase.QUARTAS;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -21,7 +20,7 @@ public class Jogo implements Serializable {
 	@GeneratedValue
 	private Long id;
         
-        private String fase;
+    private fase fase;
 	private Calendar data;
 	private String local;
 	private fase faseEnum;
@@ -121,11 +120,11 @@ public class Jogo implements Serializable {
 		this.substituicoesB = substituicoesB;
 	}
 
-        public String getFase() {
+        public fase getFase() {
         return fase;
         }
 
-        public void setFase(String fase) {
+        public void setFase(fase fase) {
         this.fase = fase;
         }
         
