@@ -89,5 +89,16 @@ public class Jogador implements Serializable {
 		ALADIREITO,	MEIAARMADOR, MEDIOCENTRO, MEIOCAMPISTALATERALESQUERDO,
 		MEIOCAMPISTALATERALDIREITO,	MEIAATACANTE, PONTA, SEGUNDOATACANTE, CENTROAVANTE
 	}
+        
+        @Override
+        public boolean equals(Object o){
+            if(o instanceof Jogador){
+                Jogador outro = (Jogador) o;
+                if(this.nome.equals(outro.getNome()) && this.selecao.equals(outro.getSelecao())){
+                    return true;
+                }
+            }
+            return false;
+        }
 
 }

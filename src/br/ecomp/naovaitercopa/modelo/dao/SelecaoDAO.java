@@ -12,11 +12,13 @@ public interface SelecaoDAO {
 	
 	public void atualizar(Selecao selecao);
 	
-	public Selecao buscarSelecao(String nome, int ano);
-	
+        public Selecao buscarSelecao(String nome, int ano);
+		
 	public List<Selecao> listar();
         
         public List<Selecao> listar(int ano);
+        
+        public List<Selecao> buscarSelecoes(String nome);
 
-	void removerTodos();
+	public void removerTodos();
 }

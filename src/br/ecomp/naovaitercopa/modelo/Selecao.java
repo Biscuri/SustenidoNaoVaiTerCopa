@@ -23,10 +23,11 @@ public class Selecao implements Serializable {
 	private String grupo;
 	private int ano;
 	private int posicao;
-	private Jogador[] jogadores;
+	private Jogador[] jogadores = new Jogador[99];
 	private Tecnico tecnico;
 	private Pais pais;
 	private LinkedList<Gol> gols;
+        private int cont = 0;
 
 	public Long getId() {
 		return id;
@@ -102,14 +103,28 @@ public class Selecao implements Serializable {
    
     @SuppressWarnings("unused")
 	public boolean addJogador(Jogador jogador){
-        if (jogadores[23] != null){
+            if(cont < 23){
+                if(jogadores[cont]==null){
+                    jogadores[cont] = jogador;
+                    cont++;
+                    return true;          
+                }
+                
+            }
+            if(cont < 30){
+                cont=0;}
+            cont++;
+                    return false;
+        
+            
+        /*
         	for (int i = 0 ; i < 23 ; i++){
         		if (jogadores[i] == null)
         			jogadores[i] = jogador;
         			return true;
         	}
         }
-        return false;
+        return false;*/
     }
     
     public boolean removeJogador(Jogador jogador){
@@ -129,12 +144,13 @@ public class Selecao implements Serializable {
         if (o instanceof Selecao) {
             Selecao outra = (Selecao) o;
             if (this.nome.equals(outra.getNome())) {
-                if (this.ano == outra.getAno()){
+               // if (this.ano == outra.getAno()){
                 	return true;
-                }
+                //}
             }
         }
         return false;
     }
+   
         
 }

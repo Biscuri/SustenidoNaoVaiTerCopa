@@ -6,12 +6,14 @@ import java.util.List;
 import br.ecomp.naovaitercopa.modelo.Jogador.posicao;
 import br.ecomp.naovaitercopa.modelo.Jogo.fase;
 import br.ecomp.naovaitercopa.modelo.dao.CopaDAOHibernate;
+import br.ecomp.naovaitercopa.modelo.dao.EscalacaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.GolDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.JogadorDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.JogoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.PaisDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.SelecaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.TecnicoDAOHibernate;
+import java.util.LinkedList;
 
 
 
@@ -28,6 +30,7 @@ public class Controller {
     CopaDAOHibernate copaDB;
     JogoDAOHibernate jogoDB;
     GolDAOHibernate golDB;
+    EscalacaoDAOHibernate escalacaoDB;
     
     /**
      * Construtor da classe controller.
@@ -40,6 +43,7 @@ public class Controller {
         copaDB = new CopaDAOHibernate();
         jogoDB = new JogoDAOHibernate();
         golDB = new GolDAOHibernate();
+        escalacaoDB = new EscalacaoDAOHibernate();
     }
     
     /**
@@ -77,7 +81,8 @@ public class Controller {
         Jogador verifica = jogadorDB.buscarJogador(nome,selecao);
         if(verifica == null){
             jogadorDB.adicionar(novo);
-            return selecao.addJogador(novo);
+           selecao.addJogador(novo);
+            return true;
         }
         
         return false;
@@ -148,6 +153,7 @@ public class Controller {
         Copa busca = copaDB.buscarCopa(ano);
         if(busca == null){
             copaDB.adicionar(nova);
+            return true;
         }
         return false;
     }
@@ -263,6 +269,51 @@ public class Controller {
       public Selecao BuscarSelecao(String nome, int ano){
     	  return selecaoDB.buscarSelecao(nome, ano);
       }
+     public boolean cadastrarEscalacao(Selecao selecao, Jogador selecionados[], Jogo jogo){
+          Escalacao nova = new Escalacao();
+          if (jogo == null || selecao == null){
+              return false;
+          }
+          if(selecionados.length != 11){
+              return false;
+          }
+          for(int i=0;i<selecionados.length;i++){
+              nova.addJogadores(selecionados[i]);
+          }
+          nova.setSelecao(selecao);
+          if(jogo.getEscalacaoA() == null){
+              jogo.setEscalacaoA(nova);
+              escalacaoDB.adicionar(nova);
+              return true;
+          }
+          else if(jogo.getEscalacaoB() == null){
+              jogo.setEscalacaoB(nova);
+              escalacaoDB.adicionar(nova);
+              return true;
+          }
+          return false;
+      }
+      
+      /**
+       * Metodo que retorna a lista de Jogadores de uma selecao
+       * @param nome nome da selecao
+       * @param ano ano da selecao
+       * @return lista de jogadores que pertecem/perteceram a selecao
+       */
+      public Jogador[] listarJogadoresDeUmaSelecao(String nome, int ano){
+            List busca = selecaoDB.buscarSelecoes(nome); // busco a lista de jogadores
+            Selecao a, resultado;
+            if(busca != null){
+                for(int i=0;i<busca.size();i++){
+                    a = (Selecao) busca.get(i);
+                    if(a.getAno() == ano){ // Apesar do nome ser igual e necessario comparar o ano
+                        resultado = a; // se for igual, retorna a lista de jogadores daquela selecao
+                        return resultado.getJogadores();
+                    }
+                }
     
-    
+        }
+            return null;
+  }
+
 }

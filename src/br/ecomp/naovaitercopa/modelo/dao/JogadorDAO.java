@@ -14,6 +14,8 @@ public interface JogadorDAO {
 	public void atualizar(Jogador jogador);
 	
 	public Jogador buscarJogador(String nome, Selecao selecao);
+        
+        public Jogador buscarJogador(String nome);
 	
 	public List<Jogador> listar();
 

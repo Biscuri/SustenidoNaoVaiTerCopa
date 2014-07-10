@@ -20,7 +20,8 @@ public class Escalacao implements Serializable {
 	private Long id;
 
 	private Selecao selecao;
-	private LinkedList<Jogador> jogadores;
+	private LinkedList<Jogador> jogadoresA;
+
 
 	public Long getId() {
 		return id;
@@ -34,15 +35,28 @@ public class Escalacao implements Serializable {
 		return selecao;
 	}
 
-	public void setSelecao(Selecao selecao) {
-		this.selecao = selecao;
+	public void setSelecao(Selecao a) {
+		this.selecao = a;
 	}
 
-	public LinkedList<Jogador> getJogadores() {
-		return jogadores;
+
+
+	public LinkedList<Jogador> getJogadoresA() {
+		return jogadoresA;
 	}
 
-	public void setJogadores(LinkedList<Jogador> jogadores) {
-		this.jogadores = jogadores;
+	public void setJogadoresA(LinkedList<Jogador> jogadoresA) {
+		this.jogadoresA = jogadoresA;
 	}
+        
+        public boolean addJogadores(Jogador a){
+            if(jogadoresA.size()<= 11){
+                jogadoresA.add(a);
+                return true;
+            }
+           return false; 
+        }
+
+
+
 }

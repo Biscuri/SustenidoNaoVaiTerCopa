@@ -3,8 +3,9 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Query;
+
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -139,6 +140,36 @@ public class JogadorDAOHibernate implements JogadorDAO {
 	}
 	
 	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.JogadorDAO#buscarJogador(java.lang.String)
+	 */
+	@Override
+	public Jogador buscarJogador(String nome) {
+		Jogador jogador = null;
+		try {
+			sessao = HibernateUtil.getSessionFactory().openSession();
+
+			Query consulta = sessao.createQuery("from Jogador where nome = :parametro");
+			consulta.setString("parametro", nome);
+
+			transacao = sessao.beginTransaction();
+			jogador = (Jogador)  consulta.uniqueResult();
+                       
+			transacao.commit();
+			return jogador;
+			
+		} catch (HibernateException e) {
+			System.err.println("Nao foi possivel buscar o jogador. Erro: " + e.getMessage());
+		} finally {
+			try {
+				sessao.close();
+			} catch (Throwable e) {
+				System.err.println("Erro ao fechar operacao de busca. Mensagem: " + e.getMessage());				
+			}
+		}
+		return jogador;
+	}
+        
+        /* (non-Javadoc)
 	 * @see br.ecomp.naivaitercopa.modelo.JogadorDAO#buscarJogador(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")

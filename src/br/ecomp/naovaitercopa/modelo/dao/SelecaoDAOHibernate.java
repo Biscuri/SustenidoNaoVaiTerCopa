@@ -204,5 +204,35 @@ public class SelecaoDAOHibernate implements SelecaoDAO {
 			}
 		}
     }
+    
+                /* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.JogoDAO#buscarJogos(java.lang.String)
+	 */
+	@Override
+	public List<Selecao> buscarSelecoes(String nome) {
+		 List selecoes = null;
+		try {
+			sessao = HibernateUtil.getSessionFactory().openSession();
+
+			Query consulta =  sessao.createQuery("from Jogo where nome = :parametro");
+			consulta.setString("parametro", nome);
+
+			transacao = sessao.beginTransaction();
+			selecoes = consulta.list();
+			transacao.commit();
+			return selecoes;
+			
+		} catch (HibernateException e) {
+			System.err.println("Nao foi possivel buscar o jogo. Erro: " + e.getMessage());
+		} finally {
+			try {
+				sessao.close();
+			} catch (Throwable e) {
+				System.err.println("Erro ao fechar operacao de busca. Mensagem: " + e.getMessage());				
+			}
+		}
+		return selecoes;
+	}
+
 
 }

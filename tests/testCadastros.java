@@ -1,5 +1,3 @@
-package testes;
-
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -93,7 +91,8 @@ public class testCadastros {
 		
 		Calendar c = Calendar.getInstance();
 		c.set(2014, Calendar.FEBRUARY, 31);
-		
+                controller.CadastrarJogador("carinha"+0, c, 0, posicao.GOLEIRO, s1);
+		/*
 		for (int i = 0 ; i < 23 ; i++){
 			j1[i] = new Jogador();			
 			j1[i].setNome("carinha"+i);
@@ -157,9 +156,9 @@ public class testCadastros {
 			j8[i].setNumero(i);
 			j8[i].setPosicao(posicao.LIBERO);
 			
-			assertThat(controller.CadastrarJogador("line"+i, c, i, posicao.LIBERO, s8),is(true));
-		}
-		
+			assertThat(controller.CadastrarJogador("line"+i, c, i, posicao.LIBERO, s8),is(true));*/
+		//}
+		/*
 		assertNotNull(controller.BuscarJogador("carinha0",s1));
 		assertNotNull(controller.BuscarJogador("manolo2",s2));
 		assertNotNull(controller.BuscarJogador("truta3",s3));
@@ -217,7 +216,7 @@ public class testCadastros {
 		controller.CadastrarSelecaoNaCopa(s8, 2018);
 		
 		assertNotNull(controller.BuscarCopa(2014).getSelecoes());
-		assertNotNull(controller.BuscarCopa(2018).getSelecoes());
+		assertNotNull(controller.BuscarCopa(2018).getSelecoes());*/
 		
 		//Insere e busca jogos
 		//TODO resto desse teste
