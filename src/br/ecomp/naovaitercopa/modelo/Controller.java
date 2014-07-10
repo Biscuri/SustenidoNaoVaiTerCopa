@@ -251,6 +251,31 @@ public class Controller {
       public List<Selecao> listarSelecoes(int ano){
           return selecaoDB.listar(ano);
       }
+      
+      public Pais BuscarPais(String pais){
+    	  //TODO saporra de método
+    	  return null;
+      }
+      
+      public Copa BuscarCopa(int ano){
+    	  //TODO saporra de método
+    	  return null;
+      }
+      
+      public Jogo BuscarJogo(Copa copa, Selecao A, Selecao B, Calendar data){
+    	  //TODO saporra de método
+    	  return null;
+      }
+      
+      public Tecnico BuscarTecnico(String nome){
+    	  //TODO saporra de método
+    	  return null;
+      }
+      
+      public Jogador BuscarJogador(String nome){
+    	  //TODO saporra de método
+    	  return null;
+      }
     
     
 }
