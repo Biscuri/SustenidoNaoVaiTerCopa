@@ -13,6 +13,7 @@ import br.ecomp.naovaitercopa.modelo.dao.JogoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.PaisDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.SelecaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.TecnicoDAOHibernate;
+
 import java.util.LinkedList;
 
 /**
@@ -150,8 +151,13 @@ public class Controller {
 		Selecao busca = selecaoDB.buscarSelecao(nome, ano);
 		if (busca == null) {
 			selecaoDB.adicionar(nova);
-			pais.addSelecao(nova);
-			return true;
+			if(pais != null) {
+				pais.addSelecao(nova);
+				return true;
+			}
+			else {
+				return false;
+			}
 		} else {
 			if (busca.getAno() != ano) {
 				selecaoDB.adicionar(nova);
@@ -524,7 +530,16 @@ public class Controller {
 			System.out.println("Sai " + subs.getSai().getNome() + "e entra "
 					+ subs.getEntra().getNome());
 		}
-
 	}
+	
+	public void mostrarCaracteristicasDoJogador(String nome){
+       Jogador busca = jogadorDB.buscarJogador(nome);
+       if(busca!=null){
+           System.out.println("Nome: "+busca.getNome());
+           System.out.println("Selecao: "+busca.getSelecao().getNome());
+           System.out.println("Data de Nascimento: "+busca.getDataNascimento().getTime().toString());
+           System.out.println("Posicao"+busca.getPosicao().name());
+       }
+    }
 
 }

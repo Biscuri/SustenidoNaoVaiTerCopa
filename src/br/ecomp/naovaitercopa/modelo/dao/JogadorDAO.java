@@ -18,4 +18,6 @@ public interface JogadorDAO {
 	public List<Jogador> listar();
 
 	void removerTodos();
+
+	public Jogador buscarJogador(String nome);
 }
