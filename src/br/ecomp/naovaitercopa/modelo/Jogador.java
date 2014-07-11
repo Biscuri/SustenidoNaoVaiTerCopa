@@ -1,7 +1,7 @@
 package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,12 +27,12 @@ public class Jogador implements Serializable {
 	private Long id;
 
 	private String nome;
-	private posicao posicao;
+	private Posicao posicao;
 	private int numero;
 
 	@Temporal(javax.persistence.TemporalType.DATE)
 	@Column(name = "nascimento_j")
-	private Calendar dataNascimento;
+	private Date dataNascimento;
 
 	@ManyToOne
 	@JoinColumn(name = "jogadores_s")
@@ -62,11 +62,11 @@ public class Jogador implements Serializable {
 		this.nome = nome;
 	}
 
-	public Calendar getDataNascimento() {
+	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Calendar dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
@@ -86,11 +86,11 @@ public class Jogador implements Serializable {
 		this.gols = gols;
 	}
 
-	public posicao getPosicao() {
+	public Posicao getPosicao() {
 		return posicao;
 	}
 
-	public void setPosicao(posicao posicao) {
+	public void setPosicao(Posicao posicao) {
 		this.posicao = posicao;
 	}
 
@@ -102,7 +102,7 @@ public class Jogador implements Serializable {
 		this.selecao = selecao;
 	}
 
-	public enum posicao {
+	public enum Posicao {
 		GOLEIRO, ZAGUEIRO, LATERALDIREITO, LATERALESQUERDO, LIBERO, VOLANTE, ALAESQUERDO, ALADIREITO, MEIAARMADOR, MEDIOCENTRO, MEIOCAMPISTALATERALESQUERDO, MEIOCAMPISTALATERALDIREITO, MEIAATACANTE, PONTA, SEGUNDOATACANTE, CENTROAVANTE
 	}
 

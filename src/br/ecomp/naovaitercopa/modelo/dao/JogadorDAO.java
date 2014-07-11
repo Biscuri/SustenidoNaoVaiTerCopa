@@ -13,7 +13,7 @@ public interface JogadorDAO {
 	
 	public void atualizar(Jogador jogador);
 	
-	public Jogador buscarJogador(String nome, Selecao selecao);
+	public Jogador buscarJogador(long id);
 	
 	public List<Jogador> listar();
 

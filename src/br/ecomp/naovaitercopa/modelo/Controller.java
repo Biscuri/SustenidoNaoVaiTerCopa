@@ -1,9 +1,9 @@
 package br.ecomp.naovaitercopa.modelo;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import br.ecomp.naovaitercopa.modelo.Jogador.posicao;
+import br.ecomp.naovaitercopa.modelo.Jogador.Posicao;
 import br.ecomp.naovaitercopa.modelo.Jogo.fase;
 import br.ecomp.naovaitercopa.modelo.dao.CopaDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.EscalacaoDAOHibernate;
@@ -13,6 +13,7 @@ import br.ecomp.naovaitercopa.modelo.dao.JogoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.PaisDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.SelecaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.TecnicoDAOHibernate;
+
 import java.util.LinkedList;
 
 /**
@@ -81,24 +82,14 @@ public class Controller {
 	 *            selecao a qual ele pertence
 	 * @return true se foi possivel cadastrar, false se ja havia sido cadastrado
 	 */
-	public boolean CadastrarJogador(String nome, Calendar data, int num,
-			posicao posicao, Selecao selecao) {
+	public void CadastrarJogador(String nome, Date data, int num,
+			Posicao posicao, Selecao selecao) {
 		Jogador novo = new Jogador();
 		novo.setNome(nome);
 		novo.setNumero(num);
 		novo.setDataNascimento(data);
 		novo.setSelecao(selecao);
 		novo.setPosicao(posicao);
-		Jogador verifica = jogadorDB.buscarJogador(nome, selecao);
-		if (verifica == null) {
-			jogadorDB.adicionar(novo);
-			if(selecao != null){
-				selecao.addJogador(novo);
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**
@@ -112,7 +103,7 @@ public class Controller {
 	 *            time que ele treina
 	 * @return true se foi possivel cadastrar, false se não foi possivel.
 	 */
-	public boolean CadastrarTecnico(String nome, Calendar data, Selecao time) {
+	public boolean CadastrarTecnico(String nome, Date data, Selecao time) {
 		Tecnico novo = new Tecnico();
 		novo.setNome(nome);
 		novo.setDataNascimento(data);
@@ -233,7 +224,7 @@ public class Controller {
 	 *            Escalacao de jogadores do time B
 	 * @return true se foi possivel , false se nao
 	 */
-	public boolean CadastrarJogo(Calendar data, String local, fase fase,
+	public void CadastrarJogo(Date data, String local, fase fase,
 			Selecao selecaoA, Selecao selecaoB, Escalacao play1, Escalacao play2) {
 		Jogo novo = new Jogo();
 		novo.setData(data);
@@ -242,17 +233,6 @@ public class Controller {
 		novo.setSelecaoB(selecaoB);
 		novo.setEscalacaoA(play1);
 		novo.setEscalacaoB(play2);
-		Jogo busca = jogoDB.buscarJogo(local, data, selecaoA, selecaoB, fase);
-		if (busca == null) {
-			jogoDB.adicionar(novo);
-			return true;
-		} else {
-			if (!busca.equals(novo)) {
-				jogoDB.adicionar(novo);
-				return true;
-			}
-			return false;
-		}
 	}
 
 	/**
@@ -268,7 +248,7 @@ public class Controller {
 	 *            em quanto tempo o jogo foi feito
 	 */
 	public void CadastrarGol(Jogo jogo, Jogador jogador, boolean contra,
-			Calendar tempo) {
+			Date tempo) {
 		Gol novo = new Gol();
 		novo.setFoiContra(contra);
 		novo.setJogador(jogador);
@@ -291,31 +271,6 @@ public class Controller {
 
 	public List<Selecao> listarSelecoes(int ano) {
 		return selecaoDB.listar(ano);
-	}
-
-	public Pais BuscarPais(String pais) {
-		return paisDB.buscarPais(pais);
-	}
-
-	public Copa BuscarCopa(int ano) {
-		return copaDB.buscarCopa(ano);
-	}
-
-	public Jogo BuscarJogo(String local, Calendar data, Selecao selecaoA,
-			Selecao selecaoB, fase fase) {
-		return jogoDB.buscarJogo(local, data, selecaoA, selecaoB, fase);
-	}
-
-	public Tecnico BuscarTecnico(String nome) {
-		return tecnicoDB.buscarTecnico(nome);
-	}
-
-	public Jogador BuscarJogador(String nome, Selecao selecao) {
-		return jogadorDB.buscarJogador(nome, selecao);
-	}
-
-	public Selecao BuscarSelecao(String nome, int ano) {
-		return selecaoDB.buscarSelecao(nome, ano);
 	}
 
 	public Escalacao cadastrarEscalacao(Selecao selecao, Jogador selecionados[]) {
@@ -416,39 +371,29 @@ public class Controller {
 	/**
 	 * Metodo que exibe placar de um jogo
 	 * 
-	 * @param local
-	 *            local que o jogo foi realizado
-	 * @param data
-	 *            data que o jogo foi realizado
-	 * @return placar do jogo em forma de string
+	 * @param ano
+	 *            ano em que o jogo foi realizado
+	 * @param selecaoA
+	 *            Selecao que jogou
+	 * @param selecaoB
+	 *            Selecao que jogou
+	 * @return  do jogo em forma de string
 	 */
-	public String exibirPlacarDeUmJogo(String local, Calendar data) {
-		Jogo busca = jogoDB.buscarJogo(local, data);
-		int contA = 0, contB = 0;
-		LinkedList<Gol> apuracao = (LinkedList<Gol>) busca.getGols();
-		for (int i = 0; i < apuracao.size(); i++) {
-			if (apuracao.get(i).isFoiContra()) { // se foi contra
-				if (apuracao.get(i).getJogador().getSelecao()
-						.equals(busca.getSelecaoA())) { // verifica se foi a
-														// selecao A que fez
-					contB++; // se foi a selecao A , incrementa os gols da
-								// selecao B
-				} else {
-					contA++; // Se foi a B , incrementa nos gols da A
-				}
-			} else { // Se nao foi contra
-				if (apuracao.get(i).getJogador().getSelecao()
-						.equals(busca.getSelecaoA())) {
-					contA++;
-				} else {
-					contB++;
-				}
+	public String exibirPlacarDeUmJogo(int ano, String selecaoA, String selecaoB) {
 
+		int contA = 0, contB = 0;
+		Copa c = copaDB.buscarCopa(ano);
+		List<Jogo> jogos = c.getJogos();
+		for (int i = 0; i < jogos.size(); i++) {
+			if (selecaoA.equals(jogos.get(i).getSelecaoA().getNome())){
+				if (selecaoB.equals(jogos.get(i).getSelecaoB().getNome())){
+					contA = jogos.get(i).getSelecaoA().getGols().size();
+					contB = jogos.get(i).getSelecaoB().getGols().size();
+				}
 			}
 		}
-		return "Placar de: " + busca.getSelecaoA().getNome() + "e: " + contA
-				+ " contra " + contB + " da " + busca.getSelecaoB().getNome();
 
+		return "Placar: " + selecaoA + ": " + contA + " X " + contB + " :" + selecaoB;
 	}
 
 	/**
@@ -503,22 +448,32 @@ public class Controller {
 		}
 	}
 
-	public void mostrarSubstituicoes(String local, Calendar data) {
-		Jogo busca = jogoDB.buscarJogo(local, data);
-		LinkedList<Substituicao> subsA = (LinkedList<Substituicao>) busca
-				.getSubstituicoesA();
-		LinkedList<Substituicao> subsB = (LinkedList<Substituicao>) busca
-				.getSubstituicoesB();
+	public void mostrarSubstituicoes(int ano, String selecaoA, String selecaoB) {
+		Copa c = copaDB.buscarCopa(ano);
+		Jogo j = null;
 		Substituicao subs;
+		List<Jogo> jogos = c.getJogos();
+		for (int i = 0; i < jogos.size(); i++) {
+			if (selecaoA.equals(jogos.get(i).getSelecaoA().getNome())){
+				if (selecaoB.equals(jogos.get(i).getSelecaoB().getNome())){
+					j = jogos.get(i);
+				}
+			}
+		}
+		
+		List<Substituicao> subsA = j.getSubstituicoesA();
+		List<Substituicao> subsB = j.getSubstituicoesB();
+		
+		
 		System.out.println("Substituicoes do Time "
-				+ busca.getSelecaoA().getNome());
+				+ selecaoA);
 		for (int i = 0; i < subsA.size(); i++) {
 			subs = subsA.get(i);
 			System.out.println("Sai " + subs.getSai().getNome() + "e entra "
 					+ subs.getEntra().getNome());
 		}
 		System.out.println("Substituicoes do Time "
-				+ busca.getSelecaoB().getNome());
+				+ selecaoB);
 		for (int i = 0; i < subsB.size(); i++) {
 			subs = subsB.get(i);
 			System.out.println("Sai " + subs.getSai().getNome() + "e entra "

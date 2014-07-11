@@ -12,7 +12,7 @@ public interface EscalacaoDAO {
 	
 	public void atualizar(Escalacao escalacao);
 	
-	public Escalacao buscarEscalacao(String nome);
+	public Escalacao buscarEscalacao(long id);
 	
 	public List<Escalacao> listar();
 

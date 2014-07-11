@@ -142,13 +142,13 @@ public class EscalacaoDAOHibernate implements EscalacaoDAO {
 	 * @see br.ecomp.naivaitercopa.modelo.EscalacaoDAO#buscarEscalacao(java.lang.String)
 	 */
 	@Override
-	public Escalacao buscarEscalacao(String nome) {
+	public Escalacao buscarEscalacao(long id) {
 		Escalacao escalacao = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = sessao.createQuery("from Escalacao where nome = :parametro");
-			consulta.setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Escalacao where id = :parametro");
+			consulta.setLong("parametro", id);
 
 			transacao = sessao.beginTransaction();
 			escalacao = (Escalacao) ((org.hibernate.Query) consulta).uniqueResult();

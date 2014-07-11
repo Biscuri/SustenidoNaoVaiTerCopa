@@ -2,6 +2,7 @@ package br.ecomp.naovaitercopa.modelo.dao;
 
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -141,68 +142,23 @@ public class JogoDAOHibernate implements JogoDAO {
 	}
 	
 	/* (non-Javadoc)
-	 * @see br.ecomp.naivaitercopa.modelo.JogoDAO#buscarJogo(java.lang.String)
+	 * @see br.ecomp.naivaitercopa.modelo.JogoDAO#buscarJogo()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public Jogo buscarJogo(String local, Calendar data, Selecao selecaoA, Selecao selecaoB, fase fase) {
-		Jogo compare = new Jogo();
-		compare.setLocal(local);
-		compare.setData(data);
-		compare.setSelecaoA(selecaoA);
-		compare.setSelecaoB(selecaoB);
-		compare.setFase(fase);
-		List<Jogo> resultados = null;
+    public Jogo buscarJogo(long id) {
+        Jogo resultado = null;
 
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta =  sessao.createQuery("from Jogo where local = :parametro");
-			consulta.setString("parametro", local);
+			Query consulta =  sessao.createQuery("from Jogo where id = :parametro");
+			consulta.setLong("parametro", id);
 
 			transacao = sessao.beginTransaction();
-			resultados = (List<Jogo>) consulta.list();
+			resultado = (Jogo) consulta.uniqueResult();
 			transacao.commit();
 			
-			for (int i = 0 ; i < resultados.size() ; i++){
-				if (resultados.get(i).equals(compare)){
-					return resultados.get(i);
-				}
-			}
-			return null;
-			
-		} catch (HibernateException e) {
-			System.err.println("Nao foi possivel buscar o jogo. Erro: " + e.getMessage());
-		} finally {
-			try {
-				sessao.close();
-			} catch (Throwable e) {
-				System.err.println("Erro ao fechar operacao de busca. Mensagem: " + e.getMessage());				
-			}
-		}
-		return null;
-	}
-
-    @Override
-    public Jogo buscarJogo(String local, Calendar data) {
-        List<Jogo> resultados = null;
-
-		try {
-			sessao = HibernateUtil.getSessionFactory().openSession();
-
-			Query consulta =  sessao.createQuery("from Jogo where local = :parametro");
-			consulta.setString("parametro", local);
-
-			transacao = sessao.beginTransaction();
-			resultados = (List<Jogo>) consulta.list();
-			transacao.commit();
-			
-			for (int i = 0 ; i < resultados.size() ; i++){
-				if (resultados.get(i).getData().equals(data)){
-					return resultados.get(i);
-				}
-			}
-			return null;
+			return resultado;
 			
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel buscar o jogo. Erro: " + e.getMessage());

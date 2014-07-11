@@ -144,27 +144,20 @@ public class JogadorDAOHibernate implements JogadorDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Jogador buscarJogador(String nome, Selecao selecao) {
+	public Jogador buscarJogador(long id) {
 		Jogador compare = new Jogador();
-		compare.setNome(nome);
-		compare.setSelecao(selecao);
-		List<Jogador> resultados = null;
+		Jogador resultado = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = sessao.createQuery("from Jogador where nome = :parametro");
-			consulta.setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Jogador where id = :parametro");
+			consulta.setLong("parametro", id);
 
 			transacao = sessao.beginTransaction();
-			resultados = (List<Jogador>) consulta.list();
+			resultado = (Jogador) consulta.uniqueResult();
                        
 			transacao.commit();
-			for (int i = 0 ; i < resultados.size() ; i++){
-				if (resultados.get(i).equals(compare)){
-					return resultados.get(i);
-				}
-			}
-			return null;
+			return resultado;
 			
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel buscar o jogador. Erro: " + e.getMessage());

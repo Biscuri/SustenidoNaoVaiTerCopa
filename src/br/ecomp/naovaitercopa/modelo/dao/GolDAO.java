@@ -12,7 +12,7 @@ public interface GolDAO {
 	
 	public void atualizar(Gol gol);
 	
-	public Gol buscarGol(String nome);
+	public Gol buscarGol(long id);
 	
 	public List<Gol> listar();
 

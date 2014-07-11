@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -19,7 +20,8 @@ import br.ecomp.naovaitercopa.modelo.Pais;
 import br.ecomp.naovaitercopa.modelo.Selecao;
 import br.ecomp.naovaitercopa.modelo.Tecnico;
 
-public class testCadastros {
+@Deprecated
+public class test {
 
 	private Controller controller = new Controller();
 	private Copa c1,c2;
@@ -100,8 +102,7 @@ public class testCadastros {
 		j7 = new Jogador[23];
 		j8 = new Jogador[23];
 		
-		Calendar c = Calendar.getInstance();
-		c.set(2014, Calendar.JANUARY, 31);
+		Date c = new Date(2000-10-01);
 		
 		for (int i = 0 ; i < 23 ; i++){
 			j1[i] = new Jogador();			
@@ -158,7 +159,7 @@ public class testCadastros {
 			j7[i].setNumero(i);
 			j7[i].setPosicao(posicao.PONTA);
 			
-			assertThat(controller.CadastrarJogador("line"+i, c, i, posicao.PONTA, s7),is(true));
+			assertThat(controller.CadastrarJogador("exclamation"+i, c, i, posicao.PONTA, s7),is(true));
 			
 			j8[i] = new Jogador();
 			j8[i].setNome("interrogation"+i);
@@ -166,7 +167,7 @@ public class testCadastros {
 			j8[i].setNumero(i);
 			j8[i].setPosicao(posicao.LIBERO);
 			
-			assertThat(controller.CadastrarJogador("line"+i, c, i, posicao.LIBERO, s8),is(true));
+			assertThat(controller.CadastrarJogador("interrogation"+i, c, i, posicao.LIBERO, s8),is(true));
 		}
 		
 		assertNotNull(controller.BuscarJogador("carinha0",s1));
@@ -230,16 +231,11 @@ public class testCadastros {
 		
 		//Insere e busca jogos
 		
-		Calendar c1 = Calendar.getInstance();
-		c1.set(2014, Calendar.JULY, 10);
-		Calendar c2 = Calendar.getInstance();
-		c1.set(2014, Calendar.JULY, 10);
-		Calendar c3 = Calendar.getInstance();
-		c1.set(2014, Calendar.JULY, 13);
-		Calendar c4 = Calendar.getInstance();
-		c1.set(2014, Calendar.JULY, 13);
-		Calendar c5 = Calendar.getInstance();
-		c1.set(2014, Calendar.JULY, 31);
+		Date d1 = new Date(2014-07-10);
+		Date d2 = new Date(2014-07-10);
+		Date d3 = new Date(2014-07-10);
+		Date d4 = new Date(2014-07-10);
+		Date d5 = new Date(2014-07-10);
 		
 		Jogador[] j11 = new Jogador[11];
 		Jogador[] j22 = new Jogador[11];
@@ -279,17 +275,28 @@ public class testCadastros {
 		assertNotNull(e41);
 		assertNotNull(e42);
 		
-		assertThat(controller.CadastrarJogo(c1, "FSA", fase.GRUPOS, s1, s2, e11, e12),is(true));
-		assertThat(controller.CadastrarJogo(c2, "SP", fase.GRUPOS, s3, s4, e21, e22),is(true));
-		assertThat(controller.CadastrarJogo(c3, "RJ", fase.GRUPOS, s5, s6, e31, e32),is(true));
-		assertThat(controller.CadastrarJogo(c4, "Acre", fase.GRUPOS, s7, s8, e41, e42),is(true));
-		assertThat(controller.CadastrarJogo(c5, "Seará", fase.FINAL, s2, s3, e51, e52),is(true));
+		assertThat(controller.CadastrarJogo(d1, "FSA", fase.GRUPOS, s1, s2, e11, e12),is(true));
+		assertThat(controller.CadastrarJogo(d2, "SP", fase.GRUPOS, s3, s4, e21, e22),is(true));
+		assertThat(controller.CadastrarJogo(d3, "RJ", fase.GRUPOS, s5, s6, e31, e32),is(true));
+		assertThat(controller.CadastrarJogo(d4, "Acre", fase.GRUPOS, s7, s8, e41, e42),is(true));
+		assertThat(controller.CadastrarJogo(d5, "Seará", fase.FINAL, s2, s3, e51, e52),is(true));
 		
-		g1 = controller.BuscarJogo("FSA", c1, s1, s2, fase.GRUPOS);
-		g2 = controller.BuscarJogo("SP", c2, s3, s4, fase.GRUPOS);
-		g3 = controller.BuscarJogo("RJ", c3, s5, s6, fase.GRUPOS);
-		g4 = controller.BuscarJogo("Acre", c4, s7, s8, fase.GRUPOS);
-		g5 = controller.BuscarJogo("Seará", c5, s2, s3, fase.FINAL);
+		g1 = controller.BuscarJogo("FSA", d1, s1, s2, fase.GRUPOS);
+		g2 = controller.BuscarJogo("SP", d2, s3, s4, fase.GRUPOS);
+		g3 = controller.BuscarJogo("RJ", d3, s5, s6, fase.GRUPOS);
+		g4 = controller.BuscarJogo("Acre", d4, s7, s8, fase.GRUPOS);
+		g5 = controller.BuscarJogo("Seará", d5, s2, s3, fase.FINAL);
+		
+		assertNotNull(g1);
+		assertNotNull(g2);
+		assertNotNull(g3);
+		assertNotNull(g4);
+		assertNotNull(g5);
+		
+	}
+	
+	@Test
+	public void testUserStories(){
 		
 	}
 	
