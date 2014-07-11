@@ -1,14 +1,23 @@
 package testes;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 import java.util.Calendar;
 
-import br.ecomp.naovaitercopa.modelo.*;
-import br.ecomp.naovaitercopa.modelo.Jogador.posicao;
-
 import org.junit.Test;
+
+import br.ecomp.naovaitercopa.modelo.Controller;
+import br.ecomp.naovaitercopa.modelo.Copa;
+import br.ecomp.naovaitercopa.modelo.Escalacao;
+import br.ecomp.naovaitercopa.modelo.Jogador;
+import br.ecomp.naovaitercopa.modelo.Jogador.posicao;
+import br.ecomp.naovaitercopa.modelo.Jogo;
+import br.ecomp.naovaitercopa.modelo.Jogo.fase;
+import br.ecomp.naovaitercopa.modelo.Pais;
+import br.ecomp.naovaitercopa.modelo.Selecao;
+import br.ecomp.naovaitercopa.modelo.Tecnico;
 
 public class testCadastros {
 
@@ -92,7 +101,7 @@ public class testCadastros {
 		j8 = new Jogador[23];
 		
 		Calendar c = Calendar.getInstance();
-		c.set(2014, Calendar.FEBRUARY, 31);
+		c.set(2014, Calendar.JANUARY, 31);
 		
 		for (int i = 0 ; i < 23 ; i++){
 			j1[i] = new Jogador();			
@@ -220,7 +229,68 @@ public class testCadastros {
 		assertNotNull(controller.BuscarCopa(2018).getSelecoes());
 		
 		//Insere e busca jogos
-		//TODO resto desse teste
+		
+		Calendar c1 = Calendar.getInstance();
+		c1.set(2014, Calendar.JULY, 10);
+		Calendar c2 = Calendar.getInstance();
+		c1.set(2014, Calendar.JULY, 10);
+		Calendar c3 = Calendar.getInstance();
+		c1.set(2014, Calendar.JULY, 13);
+		Calendar c4 = Calendar.getInstance();
+		c1.set(2014, Calendar.JULY, 13);
+		Calendar c5 = Calendar.getInstance();
+		c1.set(2014, Calendar.JULY, 31);
+		
+		Jogador[] j11 = new Jogador[11];
+		Jogador[] j22 = new Jogador[11];
+		Jogador[] j33 = new Jogador[11];
+		Jogador[] j44 = new Jogador[11];
+		Jogador[] j55 = new Jogador[11];
+		Jogador[] j66 = new Jogador[11];
+		Jogador[] j77 = new Jogador[11];
+		Jogador[] j88 = new Jogador[11];
+		
+		for (int i = 0 ; i < 11 ; i++){
+			j11[i] = j1[i];
+			j22[i] = j2[i];
+			j33[i] = j3[i];
+			j44[i] = j4[i];
+			j55[i] = j5[i];
+			j66[i] = j6[i];
+			j77[i] = j7[i];
+			j88[i] = j8[i];
+		}
+		
+		e11 = controller.cadastrarEscalacao(s1, j11);
+		e12 = controller.cadastrarEscalacao(s1, j22);
+		e21 = controller.cadastrarEscalacao(s2, j33);
+		e22 = controller.cadastrarEscalacao(s3, j44);
+		e31 = controller.cadastrarEscalacao(s4, j55);
+		e32 = controller.cadastrarEscalacao(s6, j66);
+		e41 = controller.cadastrarEscalacao(s7, j77);
+		e42 = controller.cadastrarEscalacao(s8, j88);
+		
+		assertNotNull(e11);
+		assertNotNull(e12);
+		assertNotNull(e21);
+		assertNotNull(e22);
+		assertNotNull(e31);
+		assertNotNull(e32);
+		assertNotNull(e41);
+		assertNotNull(e42);
+		
+		assertThat(controller.CadastrarJogo(c1, "FSA", fase.GRUPOS, s1, s2, e11, e12),is(true));
+		assertThat(controller.CadastrarJogo(c2, "SP", fase.GRUPOS, s3, s4, e21, e22),is(true));
+		assertThat(controller.CadastrarJogo(c3, "RJ", fase.GRUPOS, s5, s6, e31, e32),is(true));
+		assertThat(controller.CadastrarJogo(c4, "Acre", fase.GRUPOS, s7, s8, e41, e42),is(true));
+		assertThat(controller.CadastrarJogo(c5, "Seará", fase.FINAL, s2, s3, e51, e52),is(true));
+		
+		g1 = controller.BuscarJogo("FSA", c1, s1, s2, fase.GRUPOS);
+		g2 = controller.BuscarJogo("SP", c2, s3, s4, fase.GRUPOS);
+		g3 = controller.BuscarJogo("RJ", c3, s5, s6, fase.GRUPOS);
+		g4 = controller.BuscarJogo("Acre", c4, s7, s8, fase.GRUPOS);
+		g5 = controller.BuscarJogo("Seará", c5, s2, s3, fase.FINAL);
+		
 	}
 	
 }

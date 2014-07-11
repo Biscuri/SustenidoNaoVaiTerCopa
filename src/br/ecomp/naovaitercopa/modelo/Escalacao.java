@@ -29,6 +29,9 @@ public class Escalacao implements Serializable {
 	@OneToMany(mappedBy = "escalacao")
 	@Column(name = "jogadores_e")
 	private List<Jogador> jogadores = new LinkedList<Jogador>();
+	
+	@OneToOne
+	private Selecao selecao;
 
 	public Long getId() {
 		return id;
@@ -60,6 +63,14 @@ public class Escalacao implements Serializable {
 			return true;
 		}
 		return false;
+	}
+
+	public Selecao getSelecao() {
+		return selecao;
+	}
+
+	public void setSelecao(Selecao selecao) {
+		this.selecao = selecao;
 	}
 
 }

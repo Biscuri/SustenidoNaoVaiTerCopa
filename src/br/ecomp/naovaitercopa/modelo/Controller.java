@@ -318,30 +318,19 @@ public class Controller {
 		return selecaoDB.buscarSelecao(nome, ano);
 	}
 
-	public boolean cadastrarEscalacao(Selecao selecao, Jogador selecionados[],
-			Jogo jogo) {
+	public Escalacao cadastrarEscalacao(Selecao selecao, Jogador selecionados[]) {
 		Escalacao nova = new Escalacao();
-		if (jogo == null || selecao == null) {
-			return false;
+		if (selecao == null) {
+			return null;
 		}
 		if (selecionados.length != 11) {
-			return false;
+			return null;
 		}
 		for (int i = 0; i < selecionados.length; i++) {
 			nova.addJogadores(selecionados[i]);
 		}
-		// TODO VERIFICA ISSO AQUI
-		// nova.setSelecao(selecao);
-		if (jogo.getEscalacaoA() == null) {
-			jogo.setEscalacaoA(nova);
-			escalacaoDB.adicionar(nova);
-			return true;
-		} else if (jogo.getEscalacaoB() == null) {
-			jogo.setEscalacaoB(nova);
-			escalacaoDB.adicionar(nova);
-			return true;
-		}
-		return false;
+		nova.setSelecao(selecao);
+		return nova;
 	}
 
 	/**
