@@ -3,14 +3,12 @@ package br.ecomp.naovaitercopa.modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
 
 @Entity
 public class Substituicao implements Serializable {
@@ -24,8 +22,6 @@ public class Substituicao implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	@Temporal(javax.persistence.TemporalType.DATE)
-	@Column(name = "tempo_su")
 	private Calendar tempo;
 
 	@OneToOne

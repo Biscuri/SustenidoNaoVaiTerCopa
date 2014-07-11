@@ -15,12 +15,9 @@ import javax.persistence.OneToMany;
 @Entity
 public class Copa implements Serializable {
 
-<<<<<<< HEAD
 	/**
 	 * 
 	 */
-=======
->>>>>>> origin/master
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -81,7 +78,6 @@ public class Copa implements Serializable {
 		this.selecoes = selecoes;
 	}
 
-<<<<<<< HEAD
 	public void setJogos(List<Jogo> jogos) {
 		this.jogos = jogos;
 	}
@@ -90,8 +86,6 @@ public class Copa implements Serializable {
 		this.selecoes = selecoes;
 	}
 
-=======
->>>>>>> origin/master
 	public void addSelecao(Selecao selecao) {
 		selecoes.add(selecao);
 	}

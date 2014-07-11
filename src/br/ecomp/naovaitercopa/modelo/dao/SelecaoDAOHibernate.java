@@ -210,7 +210,7 @@ public class SelecaoDAOHibernate implements SelecaoDAO {
 	 */
 	@Override
 	public List<Selecao> buscarSelecoes(String nome) {
-		 List<Selecao> selecoes = null;
+		 List selecoes = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 

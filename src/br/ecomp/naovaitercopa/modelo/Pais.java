@@ -65,7 +65,6 @@ public class Pais implements Serializable {
 		this.selecoes = selecoes;
 	}
 
-<<<<<<< HEAD
 	public List<Copa> getCopas() {
 		return copas;
 	}
@@ -78,8 +77,6 @@ public class Pais implements Serializable {
 		this.selecoes = selecoes;
 	}
 
-=======
->>>>>>> origin/master
 	public void addSelecao(Selecao nova) {
 		selecoes.add(nova);
 	}

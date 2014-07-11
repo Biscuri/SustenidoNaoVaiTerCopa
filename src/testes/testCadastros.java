@@ -7,7 +7,6 @@ import java.util.Calendar;
 
 import br.ecomp.naovaitercopa.modelo.*;
 import br.ecomp.naovaitercopa.modelo.Jogador.posicao;
-import br.ecomp.naovaitercopa.modelo.Jogo.fase;
 
 import org.junit.Test;
 
@@ -93,7 +92,7 @@ public class testCadastros {
 		j8 = new Jogador[23];
 		
 		Calendar c = Calendar.getInstance();
-		c.set(2014, Calendar.JANUARY, 10);
+		c.set(2014, Calendar.FEBRUARY, 31);
 		
 		for (int i = 0 ; i < 23 ; i++){
 			j1[i] = new Jogador();			
@@ -221,18 +220,7 @@ public class testCadastros {
 		assertNotNull(controller.BuscarCopa(2018).getSelecoes());
 		
 		//Insere e busca jogos
-		
-		Calendar c1 = Calendar.getInstance();
-		c1.set(2014, Calendar.JULY, 10);
-		Calendar c2 = Calendar.getInstance();
-		c2.set(2014, Calendar.JULY, 10);
-		Calendar c3 = Calendar.getInstance();
-		c3.set(2014, Calendar.JULY, 13);
-		Calendar c4 = Calendar.getInstance();
-		c4.set(2014, Calendar.JULY, 13);
-		Calendar c5 = Calendar.getInstance();
-		c5.set(2014, Calendar.JULY, 31);
-		
+		//TODO resto desse teste
 	}
 	
 }
