@@ -161,6 +161,7 @@ public class Jogo implements Serializable {
 		this.fase = fase;
 	}
 
+<<<<<<< HEAD
 	public Copa getCopa() {
 		return copa;
 	}
@@ -181,6 +182,8 @@ public class Jogo implements Serializable {
 		this.gols = gols;
 	}
 
+=======
+>>>>>>> origin/master
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof Jogo) {

@@ -30,7 +30,11 @@ public class Selecao implements Serializable {
 	private String grupo;
 	private int ano;
 	private int posicao;
+<<<<<<< HEAD
 	private int cont = 0;
+=======
+	private int cont;
+>>>>>>> origin/master
 
 	@OneToMany(mappedBy = "selecao")
 	@Column(name = "jogadores_s")
@@ -87,11 +91,19 @@ public class Selecao implements Serializable {
 		this.posicao = posicao;
 	}
 
+<<<<<<< HEAD
 	public Jogador[] getJogadores() {
 		return (Jogador[]) jogadores.toArray();
 	}
 
 	public void setJogadores(LinkedList<Jogador> jogadores) {
+=======
+	public List<Jogador> getJogadores() {
+		return jogadores;
+	}
+
+	public void setJogadores(List<Jogador> jogadores) {
+>>>>>>> origin/master
 		this.jogadores = jogadores;
 	}
 
@@ -143,15 +155,19 @@ public class Selecao implements Serializable {
 		this.jogo = jogo;
 	}
 
+<<<<<<< HEAD
 	public void setJogadores(List<Jogador> jogadores) {
 		this.jogadores = jogadores;
 	}
 
+=======
+>>>>>>> origin/master
 	public void setGols(List<Gol> gols) {
 		this.gols = gols;
 	}
 
 	public boolean addJogador(Jogador jogador) {
+<<<<<<< HEAD
 		for (int i = 0; i < 23; i++) {
 			if (jogadores.toArray()[i] == null) {
 				jogadores.toArray()[i] = jogador;
@@ -159,6 +175,26 @@ public class Selecao implements Serializable {
 			}
 		}
 		return false;
+=======
+		if (cont < 23) {
+			if (jogadores.toArray()[cont] == null) {
+				jogadores.toArray()[cont] = jogador;
+				cont++;
+				return true;
+			}
+
+		}
+		if (cont < 30) {
+			cont = 0;
+		}
+		cont++;
+		return false;
+
+		/*
+		 * for (int i = 0 ; i < 23 ; i++){ if (jogadores[i] == null)
+		 * jogadores[i] = jogador; return true; } } return false;
+		 */
+>>>>>>> origin/master
 	}
 
 	public boolean removeJogador(Jogador jogador) {

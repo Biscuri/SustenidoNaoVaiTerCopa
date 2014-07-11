@@ -12,13 +12,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
-public class Tecnico implements Serializable{
-	
+public class Tecnico implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+<<<<<<< HEAD
 	@Id @GeneratedValue
 	private Long id;
 	
@@ -42,17 +43,35 @@ public class Tecnico implements Serializable{
 	public void setSelecao(Selecao selecao) {
 		this.selecao = selecao;
 	}
+=======
+	@Id
+	@GeneratedValue
+	private Long id;
+
+	private String nome;
+
+	@Temporal(javax.persistence.TemporalType.DATE)
+	@Column(name = "nascimento_t")
+	private Calendar dataNascimento;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "tecnico")
+	private Selecao selecao;
+
+>>>>>>> origin/master
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public Calendar getDataNascimento() {
 		return dataNascimento;
 	}
+
 	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
+
 }
