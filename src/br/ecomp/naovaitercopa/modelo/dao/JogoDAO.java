@@ -18,6 +18,8 @@ public interface JogoDAO {
 	
 	public Jogo buscarJogo(String local, Calendar data, Selecao selecaoA, Selecao selecaoB, fase fase);
 	
+        public Jogo buscarJogo(String local, Calendar data);
+        
 	public List<Jogo> listar();
 
 	void removerTodos();

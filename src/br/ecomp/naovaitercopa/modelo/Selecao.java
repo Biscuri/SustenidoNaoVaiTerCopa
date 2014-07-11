@@ -2,10 +2,17 @@ package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Selecao implements Serializable {
@@ -18,16 +25,35 @@ public class Selecao implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-        
-        private String nome;
+
+	private String nome;
 	private String grupo;
 	private int ano;
 	private int posicao;
-	private Jogador[] jogadores = new Jogador[99];
-	private Tecnico tecnico;
+	private int cont = 0;
+
+	@OneToMany(mappedBy = "selecao")
+	@Column(name = "jogadores_s")
+	private List<Jogador> jogadores = new LinkedList<Jogador>();
+
+	@OneToMany(mappedBy = "selecao")
+	@Column(name = "gols_s")
+	private List<Gol> gols;
+
+	@ManyToOne
+	@JoinColumn(name = "selecoes_c")
+	private Copa copa;
+
+	@ManyToOne
+	@JoinColumn(name = "selecoes_p")
 	private Pais pais;
-	private LinkedList<Gol> gols;
-        private int cont = 0;
+
+	@OneToOne
+	@PrimaryKeyJoinColumn(name = "selecao")
+	private Tecnico tecnico;
+
+	@OneToOne
+	private Jogo jogo;
 
 	public Long getId() {
 		return id;
@@ -62,10 +88,10 @@ public class Selecao implements Serializable {
 	}
 
 	public Jogador[] getJogadores() {
-		return jogadores;
+		return (Jogador[]) jogadores.toArray();
 	}
 
-	public void setJogadores(Jogador[] jogadores) {
+	public void setJogadores(LinkedList<Jogador> jogadores) {
 		this.jogadores = jogadores;
 	}
 
@@ -85,7 +111,7 @@ public class Selecao implements Serializable {
 		this.pais = pais;
 	}
 
-	public LinkedList<Gol> getGols() {
+	public List<Gol> getGols() {
 		return gols;
 	}
 
@@ -93,64 +119,71 @@ public class Selecao implements Serializable {
 		this.gols = gols;
 	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-   
-    @SuppressWarnings("unused")
-	public boolean addJogador(Jogador jogador){
-            if(cont < 23){
-                if(jogadores[cont]==null){
-                    jogadores[cont] = jogador;
-                    cont++;
-                    return true;          
-                }
-                
-            }
-            if(cont < 30){
-                cont=0;}
-            cont++;
-                    return false;
-        
-            
-        /*
-        	for (int i = 0 ; i < 23 ; i++){
-        		if (jogadores[i] == null)
-        			jogadores[i] = jogador;
-        			return true;
-        	}
-        }
-        return false;*/
-    }
-    
-    public boolean removeJogador(Jogador jogador){
-    	for (int i = 0 ; i < 23 ; i++){
-    		if (jogadores[i].equals(jogador)){
-    			for (int j = i ; j < 22 ; j++){
-    				jogadores[j] = jogadores[j+1];
-    			}
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Selecao) {
-            Selecao outra = (Selecao) o;
-            if (this.nome.equals(outra.getNome())) {
-               // if (this.ano == outra.getAno()){
-                	return true;
-                //}
-            }
-        }
-        return false;
-    }
-   
-        
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Copa getCopa() {
+		return copa;
+	}
+
+	public void setCopa(Copa copa) {
+		this.copa = copa;
+	}
+
+	public Jogo getJogo() {
+		return jogo;
+	}
+
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
+	}
+
+	public void setJogadores(List<Jogador> jogadores) {
+		this.jogadores = jogadores;
+	}
+
+	public void setGols(List<Gol> gols) {
+		this.gols = gols;
+	}
+
+	public boolean addJogador(Jogador jogador) {
+		for (int i = 0; i < 23; i++) {
+			if (jogadores.toArray()[i] == null) {
+				jogadores.toArray()[i] = jogador;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean removeJogador(Jogador jogador) {
+		for (int i = 0; i < 23; i++) {
+			if (jogadores.toArray()[i].equals(jogador)) {
+				for (int j = i; j < 22; j++) {
+					jogadores.toArray()[j] = jogadores.toArray()[j + 1];
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Selecao) {
+			Selecao outra = (Selecao) o;
+			if (this.nome.equals(outra.getNome())) {
+				// if (this.ano == outra.getAno()){
+				return true;
+				// }
+			}
+		}
+		return false;
+	}
+
 }

@@ -2,10 +2,14 @@ package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Escalacao implements Serializable {
@@ -19,9 +23,12 @@ public class Escalacao implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	private Selecao selecao;
-	private LinkedList<Jogador> jogadoresA;
+	@OneToOne
+	private Jogo jogo;
 
+	@OneToMany(mappedBy = "escalacao")
+	@Column(name = "jogadores_e")
+	private List<Jogador> jogadores = new LinkedList<Jogador>();
 
 	public Long getId() {
 		return id;
@@ -31,32 +38,28 @@ public class Escalacao implements Serializable {
 		this.id = id;
 	}
 
-	public Selecao getSelecao() {
-		return selecao;
+	public Jogo getJogo() {
+		return jogo;
 	}
 
-	public void setSelecao(Selecao a) {
-		this.selecao = a;
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 
-
-
-	public LinkedList<Jogador> getJogadoresA() {
-		return jogadoresA;
+	public List<Jogador> getJogadores() {
+		return jogadores;
 	}
 
-	public void setJogadoresA(LinkedList<Jogador> jogadoresA) {
-		this.jogadoresA = jogadoresA;
+	public void setJogadores(List<Jogador> jogadores) {
+		this.jogadores = jogadores;
 	}
-        
-        public boolean addJogadores(Jogador a){
-            if(jogadoresA.size()<= 11){
-                jogadoresA.add(a);
-                return true;
-            }
-           return false; 
-        }
 
-
+	public boolean addJogadores(Jogador a) {
+		if (jogadores.size() <= 11) {
+			jogadores.add(a);
+			return true;
+		}
+		return false;
+	}
 
 }

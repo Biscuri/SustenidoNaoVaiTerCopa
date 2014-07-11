@@ -3,11 +3,16 @@ package br.ecomp.naovaitercopa.modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 @Entity
 public class Jogador implements Serializable {
@@ -22,11 +27,24 @@ public class Jogador implements Serializable {
 	private Long id;
 
 	private String nome;
-	private Calendar dataNascimento;
-	private int numero;
 	private posicao posicao;
+	private int numero;
+
+	@Temporal(javax.persistence.TemporalType.DATE)
+	@Column(name = "nascimento_j")
+	private Calendar dataNascimento;
+
+	@ManyToOne
+	@JoinColumn(name = "jogadores_s")
 	private Selecao selecao;
-	private LinkedList<Gol> gols;
+
+	@ManyToOne
+	@JoinColumn(name = "jogadores_e")
+	private Escalacao escalacao;
+
+	@OneToMany(mappedBy = "jogador")
+	@Column(name = "gols_j")
+	private List<Gol> gols;
 
 	public Long getId() {
 		return id;
@@ -60,14 +78,14 @@ public class Jogador implements Serializable {
 		this.numero = numero;
 	}
 
-	public LinkedList<Gol> getGols() {
+	public List<Gol> getGols() {
 		return gols;
 	}
 
 	public void setGols(LinkedList<Gol> gols) {
 		this.gols = gols;
 	}
-	
+
 	public posicao getPosicao() {
 		return posicao;
 	}
@@ -84,21 +102,20 @@ public class Jogador implements Serializable {
 		this.selecao = selecao;
 	}
 
-	public enum posicao{
-		GOLEIRO, ZAGUEIRO, LATERALDIREITO, LATERALESQUERDO, LIBERO, VOLANTE, ALAESQUERDO,
-		ALADIREITO,	MEIAARMADOR, MEDIOCENTRO, MEIOCAMPISTALATERALESQUERDO,
-		MEIOCAMPISTALATERALDIREITO,	MEIAATACANTE, PONTA, SEGUNDOATACANTE, CENTROAVANTE
+	public enum posicao {
+		GOLEIRO, ZAGUEIRO, LATERALDIREITO, LATERALESQUERDO, LIBERO, VOLANTE, ALAESQUERDO, ALADIREITO, MEIAARMADOR, MEDIOCENTRO, MEIOCAMPISTALATERALESQUERDO, MEIOCAMPISTALATERALDIREITO, MEIAATACANTE, PONTA, SEGUNDOATACANTE, CENTROAVANTE
 	}
-        
-        @Override
-        public boolean equals(Object o){
-            if(o instanceof Jogador){
-                Jogador outro = (Jogador) o;
-                if(this.nome.equals(outro.getNome()) && this.selecao.equals(outro.getSelecao())){
-                    return true;
-                }
-            }
-            return false;
-        }
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Jogador) {
+			Jogador outro = (Jogador) o;
+			if (this.nome.equals(outro.getNome())
+					&& this.selecao.equals(outro.getSelecao())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

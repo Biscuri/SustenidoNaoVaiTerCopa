@@ -3,10 +3,19 @@ package br.ecomp.naovaitercopa.modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 @Entity
 public class Jogo implements Serializable {
@@ -19,18 +28,42 @@ public class Jogo implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-        
-    private fase fase;
-	private Calendar data;
-	private String local;
+
+	private fase fase;
 	private fase faseEnum;
-	private LinkedList<Gol> gols = new LinkedList<Gol>();
+
+	@Temporal(javax.persistence.TemporalType.DATE)
+	@Column(name = "data_jg")
+	private Calendar data;
+
+	@ManyToOne
+	@JoinColumn(name = "jogos_c")
+	private Copa copa;
+
+	@Lob
+	private String local;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "jogo")
 	private Selecao selecaoA;
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "jogo")
 	private Selecao selecaoB;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "jogo")
 	private Escalacao escalacaoA;
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "jogo")
 	private Escalacao escalacaoB;
-	private LinkedList<Substituicao> substituicoesA = new LinkedList<Substituicao>();
-	private LinkedList<Substituicao> substituicoesB = new LinkedList<Substituicao>();
+
+	@OneToMany(mappedBy = "selecaoA")
+	@Column(name = "substituicoesA_jg")
+	private List<Substituicao> substituicoesA = new LinkedList<Substituicao>();
+
+	@OneToMany(mappedBy = "selecaoB")
+	@Column(name = "substituicoesB_jg")
+	private List<Substituicao> substituicoesB = new LinkedList<Substituicao>();
+
+	@OneToMany(mappedBy = "jogo")
+	@Column(name = "gols_jg")
+	private List<Gol> gols = new LinkedList<Gol>();
 
 	public Long getId() {
 		return id;
@@ -64,7 +97,7 @@ public class Jogo implements Serializable {
 		this.faseEnum = faseEnum;
 	}
 
-	public LinkedList<Gol> getGols() {
+	public List<Gol> getGols() {
 		return gols;
 	}
 
@@ -104,7 +137,7 @@ public class Jogo implements Serializable {
 		this.escalacaoB = escalacaoB;
 	}
 
-	public LinkedList<Substituicao> getSubstituicoesA() {
+	public List<Substituicao> getSubstituicoesA() {
 		return substituicoesA;
 	}
 
@@ -112,7 +145,7 @@ public class Jogo implements Serializable {
 		this.substituicoesA = substituicoesA;
 	}
 
-	public LinkedList<Substituicao> getSubstituicoesB() {
+	public List<Substituicao> getSubstituicoesB() {
 		return substituicoesB;
 	}
 
@@ -120,58 +153,75 @@ public class Jogo implements Serializable {
 		this.substituicoesB = substituicoesB;
 	}
 
-        public fase getFase() {
-        return fase;
-        }
+	public fase getFase() {
+		return fase;
+	}
 
-        public void setFase(fase fase) {
-        this.fase = fase;
-        }
-        
-     @Override
-    public boolean equals(Object o) {
-        if (o instanceof Jogo) {
-            Jogo outro = (Jogo) o;
-            if (this.data == outro.getData()) {
-                if (this.selecaoA == outro.getSelecaoA()) {
-                    if (this.selecaoB == outro.getSelecaoB()) {
-                        if (this.fase.equals(outro.getFase())) {
-                            return true;
-                        }
-                    }
-                }
-            }
+	public void setFase(fase fase) {
+		this.fase = fase;
+	}
 
-        }
-        return false;
-    }
-    
-    public void addGol(Gol novo){
-        gols.add(novo);      
-    }
-    
-    public void removeGol(Gol novo){
-        gols.remove(novo);
-    }
-    
-    public boolean addSubstituicaoA(Substituicao nova){
-        if(substituicoesA.size() < 3){
-            substituicoesA.add(nova);
-            return true;
-        }
-        return false;
-    }
-    
-        public boolean addSubstituicaoB(Substituicao nova){
-        if(substituicoesB.size() < 3){
-            substituicoesB.add(nova);
-            return true;
-        }
-        return false;
-    }
-    
-    
-        
+	public Copa getCopa() {
+		return copa;
+	}
+
+	public void setCopa(Copa copa) {
+		this.copa = copa;
+	}
+
+	public void setSubstituicoesA(List<Substituicao> substituicoesA) {
+		this.substituicoesA = substituicoesA;
+	}
+
+	public void setSubstituicoesB(List<Substituicao> substituicoesB) {
+		this.substituicoesB = substituicoesB;
+	}
+
+	public void setGols(List<Gol> gols) {
+		this.gols = gols;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Jogo) {
+			Jogo outro = (Jogo) o;
+			if (this.data == outro.getData()) {
+				if (this.selecaoA == outro.getSelecaoA()) {
+					if (this.selecaoB == outro.getSelecaoB()) {
+						if (this.fase.equals(outro.getFase())) {
+							return true;
+						}
+					}
+				}
+			}
+
+		}
+		return false;
+	}
+
+	public void addGol(Gol novo) {
+		gols.add(novo);
+	}
+
+	public void removeGol(Gol novo) {
+		gols.remove(novo);
+	}
+
+	public boolean addSubstituicaoA(Substituicao nova) {
+		if (substituicoesA.size() < 3) {
+			substituicoesA.add(nova);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean addSubstituicaoB(Substituicao nova) {
+		if (substituicoesB.size() < 3) {
+			substituicoesB.add(nova);
+			return true;
+		}
+		return false;
+	}
 
 	public enum fase {
 		GRUPOS, OITAVAS, QUARTAS, SEMIS, FINAL, TERCEIROLUGAR
