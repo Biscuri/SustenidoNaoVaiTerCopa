@@ -1,11 +1,11 @@
 package br.ecomp.naovaitercopa.modelo.dao;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.ecomp.naovaitercopa.modelo.Jogo;
-import br.ecomp.naovaitercopa.modelo.Selecao;
 import br.ecomp.naovaitercopa.modelo.Jogo.fase;
+import br.ecomp.naovaitercopa.modelo.Selecao;
 
 
 public interface JogoDAO {
@@ -16,9 +16,7 @@ public interface JogoDAO {
 	
 	public void atualizar(Jogo pais);
 	
-	public Jogo buscarJogo(String local, Calendar data, Selecao selecaoA, Selecao selecaoB, fase fase);
-	
-        public Jogo buscarJogo(String local, Calendar data);
+	public Jogo buscarJogo(long id);
         
 	public List<Jogo> listar();
 

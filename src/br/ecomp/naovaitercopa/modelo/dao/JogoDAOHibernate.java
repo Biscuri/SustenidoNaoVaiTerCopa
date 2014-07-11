@@ -1,6 +1,7 @@
 package br.ecomp.naovaitercopa.modelo.dao;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -166,6 +167,7 @@ public class JogoDAOHibernate implements JogoDAO {
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	/*
 	 * (non-Javadoc)
@@ -174,9 +176,14 @@ public class JogoDAOHibernate implements JogoDAO {
 	 * java.util.Calendar, br.ecomp.naivaitercopa.modelo.Selecao,
 	 * br.ecomp.naivaitercopa.modelo.Selecao,
 	 * br.ecomp.naovaitercopa.modelo.Jogo.fase )
+=======
+	
+	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.JogoDAO#buscarJogo()
+>>>>>>> origin/master
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
+<<<<<<< HEAD
 	public Jogo buscarJogo(String local, Calendar data, Selecao selecaoA,
 			Selecao selecaoB, fase fase) {
 		Jogo compare = new Jogo();
@@ -186,17 +193,27 @@ public class JogoDAOHibernate implements JogoDAO {
 		compare.setSelecaoB(selecaoB);
 		compare.setFase(fase);
 		List<Jogo> resultados = null;
+=======
+    public Jogo buscarJogo(long id) {
+        Jogo resultado = null;
+>>>>>>> origin/master
 
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
+<<<<<<< HEAD
 			Query consulta = sessao
 					.createQuery("from Jogo where local = :parametro");
 			consulta.setString("parametro", local);
+=======
+			Query consulta =  sessao.createQuery("from Jogo where id = :parametro");
+			consulta.setLong("parametro", id);
+>>>>>>> origin/master
 
 			transacao = sessao.beginTransaction();
-			resultados = (List<Jogo>) consulta.list();
+			resultado = (Jogo) consulta.uniqueResult();
 			transacao.commit();
+<<<<<<< HEAD
 
 			for (int i = 0; i < resultados.size(); i++) {
 				if (resultados.get(i).equals(compare)) {
@@ -250,6 +267,11 @@ public class JogoDAOHibernate implements JogoDAO {
 			}
 			return null;
 
+=======
+			
+			return resultado;
+			
+>>>>>>> origin/master
 		} catch (HibernateException e) {
 			System.err.println("Nao foi possivel buscar o jogo. Erro: "
 					+ e.getMessage());

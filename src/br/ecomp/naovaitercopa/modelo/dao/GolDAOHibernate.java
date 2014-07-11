@@ -170,14 +170,19 @@ public class GolDAOHibernate implements GolDAO {
 	 * @see br.ecomp.naovaitercopa.modelo.GolDAO#buscarGol(java.lang.String)
 	 */
 	@Override
-	public Gol buscarGol(String nome) {
+	public Gol buscarGol(long id) {
 		Gol gol = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
+<<<<<<< HEAD
 			Query consulta = sessao
 					.createQuery("from Gol where nome = :parametro");
 			consulta.setString("parametro", nome);
+=======
+			Query consulta =  sessao.createQuery("from Gol where id = :parametro");
+			consulta.setLong("parametro", id);
+>>>>>>> origin/master
 
 			transacao = sessao.beginTransaction();
 			gol = (Gol) consulta.uniqueResult();
