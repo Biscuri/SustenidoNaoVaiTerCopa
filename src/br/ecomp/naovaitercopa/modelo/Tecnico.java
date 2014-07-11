@@ -2,7 +2,6 @@ package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +25,7 @@ public class Tecnico implements Serializable{
 	private String nome;
 	
     @Temporal(javax.persistence.TemporalType.DATE) @Column(name = "nascimento_t")
-	private Date dataNascimento;
+	private Calendar dataNascimento;
     
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "tecnico")
 	private Selecao selecao;
@@ -49,10 +48,10 @@ public class Tecnico implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Date getDataNascimento() {
+	public Calendar getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(Calendar dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	

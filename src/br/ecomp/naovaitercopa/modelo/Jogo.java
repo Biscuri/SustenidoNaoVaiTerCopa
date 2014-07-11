@@ -1,7 +1,7 @@
 package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class Jogo implements Serializable {
 
 	@Temporal(javax.persistence.TemporalType.DATE)
 	@Column(name = "data_jg")
-	private Date data;
+	private Calendar data;
 
 	@ManyToOne
 	@JoinColumn(name = "jogos_c")
@@ -73,11 +73,11 @@ public class Jogo implements Serializable {
 		this.id = id;
 	}
 
-	public Date getData() {
+	public Calendar getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(Calendar data) {
 		this.data = data;
 	}
 

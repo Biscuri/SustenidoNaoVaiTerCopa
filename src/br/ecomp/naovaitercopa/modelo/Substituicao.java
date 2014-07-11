@@ -2,7 +2,6 @@ package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,7 @@ public class Substituicao implements Serializable {
 	@GeneratedValue
 	private Long id;
 
-	private Date tempo;
+	private Calendar tempo;
 
 	@OneToOne
 	private Jogador sai;
@@ -46,11 +45,11 @@ public class Substituicao implements Serializable {
 		this.id = id;
 	}
 
-	public Date getTempo() {
+	public Calendar getTempo() {
 		return tempo;
 	}
 
-	public void setTempo(Date tempo) {
+	public void setTempo(Calendar tempo) {
 		this.tempo = tempo;
 	}
 

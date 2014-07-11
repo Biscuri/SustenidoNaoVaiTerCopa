@@ -1,7 +1,7 @@
 package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +23,7 @@ public class Gol implements Serializable {
 	private Long id;
 
 	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date tempo;
+	private Calendar tempo;
 	private boolean foiContra;
 
 	@ManyToOne
@@ -46,11 +46,11 @@ public class Gol implements Serializable {
 		this.id = id;
 	}
 
-	public Date getTempo() {
+	public Calendar getTempo() {
 		return tempo;
 	}
 
-	public void setTempo(Date tempo) {
+	public void setTempo(Calendar tempo) {
 		this.tempo = tempo;
 	}
 

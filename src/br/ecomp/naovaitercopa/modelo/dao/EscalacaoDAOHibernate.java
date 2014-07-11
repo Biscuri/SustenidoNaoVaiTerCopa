@@ -172,19 +172,14 @@ public class EscalacaoDAOHibernate implements EscalacaoDAO {
 	 * String)
 	 */
 	@Override
-	public Escalacao buscarEscalacao(long id) {
+	public Escalacao buscarEscalacao(String nome) {
 		Escalacao escalacao = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-<<<<<<< HEAD
 			Query consulta = sessao
 					.createQuery("from Escalacao where nome = :parametro");
 			consulta.setString("parametro", nome);
-=======
-			Query consulta = sessao.createQuery("from Escalacao where id = :parametro");
-			consulta.setLong("parametro", id);
->>>>>>> origin/master
 
 			transacao = sessao.beginTransaction();
 			escalacao = (Escalacao) ((org.hibernate.Query) consulta)
