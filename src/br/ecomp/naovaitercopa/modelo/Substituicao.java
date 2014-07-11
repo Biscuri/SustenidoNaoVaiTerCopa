@@ -3,11 +3,14 @@ package br.ecomp.naovaitercopa.modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 @Entity
 public class Substituicao implements Serializable {
@@ -21,15 +24,22 @@ public class Substituicao implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	@Temporal(javax.persistence.TemporalType.DATE)
+	@Column(name = "tempo_su")
 	private Calendar tempo;
-	
+
 	@OneToOne
 	private Jogador sai;
 	@OneToOne
 	private Jogador entra;
-	
+
 	@ManyToOne
-	private Selecao selecao;
+	@JoinColumn(name = "substituicoesA_jg")
+	private Selecao selecaoA;
+
+	@ManyToOne
+	@JoinColumn(name = "substituicoesB_jg")
+	private Selecao selecaoB;
 
 	public Long getId() {
 		return id;
@@ -63,12 +73,20 @@ public class Substituicao implements Serializable {
 		this.entra = entra;
 	}
 
-	public Selecao getSelecao() {
-		return selecao;
+	public Selecao getSelecaoA() {
+		return selecaoA;
 	}
 
-	public void setSelecao(Selecao selecao) {
-		this.selecao = selecao;
+	public void setSelecaoA(Selecao selecaoA) {
+		this.selecaoA = selecaoA;
+	}
+
+	public Selecao getSelecaoB() {
+		return selecaoB;
+	}
+
+	public void setSelecaoB(Selecao selecaoB) {
+		this.selecaoB = selecaoB;
 	}
 
 }

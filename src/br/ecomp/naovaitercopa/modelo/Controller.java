@@ -13,9 +13,6 @@ import br.ecomp.naovaitercopa.modelo.dao.JogoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.PaisDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.SelecaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.TecnicoDAOHibernate;
-import java.util.LinkedList;
-
-
 
 /**
  *
@@ -280,7 +277,8 @@ public class Controller {
           for(int i=0;i<selecionados.length;i++){
               nova.addJogadores(selecionados[i]);
           }
-          nova.setSelecao(selecao);
+          //TODO VEJAM ISSO AQUI, NÃO ENTENDI
+          //nova.setSelecao(selecao);
           if(jogo.getEscalacaoA() == null){
               jogo.setEscalacaoA(nova);
               escalacaoDB.adicionar(nova);
@@ -301,14 +299,14 @@ public class Controller {
        * @return lista de jogadores que pertecem/perteceram a selecao
        */
       public Jogador[] listarJogadoresDeUmaSelecao(String nome, int ano){
-            List busca = selecaoDB.buscarSelecoes(nome); // busco a lista de jogadores
+            List<Selecao> busca = selecaoDB.buscarSelecoes(nome); // busco a lista de jogadores
             Selecao a, resultado;
             if(busca != null){
                 for(int i=0;i<busca.size();i++){
                     a = (Selecao) busca.get(i);
                     if(a.getAno() == ano){ // Apesar do nome ser igual e necessario comparar o ano
                         resultado = a; // se for igual, retorna a lista de jogadores daquela selecao
-                        return resultado.getJogadores();
+                        return (Jogador[]) resultado.getJogadores().toArray();
                     }
                 }
     

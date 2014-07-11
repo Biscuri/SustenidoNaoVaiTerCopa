@@ -21,7 +21,7 @@ public class Main {
 	public static void main(String[] args) {
             	
         Controller controller = new Controller();
-	controller.CadastrarJogador(null, null, num, Jogador.posicao.GOLEIRO, null)
+        controller.CadastrarJogador(null, null, 11, Jogador.posicao.GOLEIRO, null);
 	}
 
 }

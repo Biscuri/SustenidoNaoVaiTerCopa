@@ -6,6 +6,9 @@ import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
 
 @Entity
 public class Gol implements Serializable {
@@ -19,9 +22,21 @@ public class Gol implements Serializable {
 	@GeneratedValue
 	private Long id;
 
+	@Temporal(javax.persistence.TemporalType.DATE)
 	private Calendar tempo;
 	private boolean foiContra;
+
+	@ManyToOne
+	@JoinColumn(name = "gols_j")
 	private Jogador jogador;
+
+	@ManyToOne
+	@JoinColumn(name = "gols_s")
+	private Selecao selecao;
+
+	@ManyToOne
+	@JoinColumn(name = "gols_jg")
+	private Jogo jogo;
 
 	public Long getId() {
 		return id;
