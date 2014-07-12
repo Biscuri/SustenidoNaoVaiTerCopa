@@ -4,21 +4,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
 
-import br.ecomp.naovaitercopa.modelo.Controller;
-import br.ecomp.naovaitercopa.modelo.Copa;
-import br.ecomp.naovaitercopa.modelo.Escalacao;
-import br.ecomp.naovaitercopa.modelo.Jogador;
-import br.ecomp.naovaitercopa.modelo.Jogador.posicao;
-import br.ecomp.naovaitercopa.modelo.Jogo;
-import br.ecomp.naovaitercopa.modelo.Jogo.fase;
-import br.ecomp.naovaitercopa.modelo.Pais;
-import br.ecomp.naovaitercopa.modelo.Selecao;
-import br.ecomp.naovaitercopa.modelo.Tecnico;
+import br.ecomp.naovaitercopa.modelo.*;
 
 @Deprecated
 public class test {
@@ -36,23 +26,23 @@ public class test {
 	public void test(){
 		
 		//Insere e busca paï¿½ses.
-		assertThat(controller.CadastrarPais("Brasil", "America do Sul"), is(true));
-		assertThat(controller.CadastrarPais("Alemanha", "Europa"),is(true));
-		assertThat(controller.CadastrarPais("Argentina", "America do Sul"),is(true));
-		assertThat(controller.CadastrarPais("EUA", "Murica"),is(true));
-		assertThat(controller.CadastrarPais("Inglaterra", "Europa"),is(true));
-		assertThat(controller.CadastrarPais("Japao", "Asia"),is(true));
-		assertThat(controller.CadastrarPais("Holanda", "Europa"),is(true));
-		assertThat(controller.CadastrarPais("Costa Rica", "America Central"),is(true));
+		assertThat(controller.cadastrarPais("Brasil", "America do Sul"), is(true));
+		assertThat(controller.cadastrarPais("Alemanha", "Europa"),is(true));
+		assertThat(controller.cadastrarPais("Argentina", "America do Sul"),is(true));
+		assertThat(controller.cadastrarPais("EUA", "Murica"),is(true));
+		assertThat(controller.cadastrarPais("Inglaterra", "Europa"),is(true));
+		assertThat(controller.cadastrarPais("Japao", "Asia"),is(true));
+		assertThat(controller.cadastrarPais("Holanda", "Europa"),is(true));
+		assertThat(controller.cadastrarPais("Costa Rica", "America Central"),is(true));
 		
-		p1 = controller.BuscarPais("Brasil");
-		p2 = controller.BuscarPais("Alemanha");
-		p3 = controller.BuscarPais("Argentina");
-		p4 = controller.BuscarPais("EUA");
-		p5 = controller.BuscarPais("Inglaterra");
-		p6 = controller.BuscarPais("Japao");
-		p7 = controller.BuscarPais("Holanda");
-		p8 = controller.BuscarPais("Costa Rica");
+		p1 = controller.buscarPais("Brasil");
+		p2 = controller.buscarPais("Alemanha");
+		p3 = controller.buscarPais("Argentina");
+		p4 = controller.buscarPais("EUA");
+		p5 = controller.buscarPais("Inglaterra");
+		p6 = controller.buscarPais("Japao");
+		p7 = controller.buscarPais("Holanda");
+		p8 = controller.buscarPais("Costa Rica");
 		
 		assertNotNull(p1);
 		assertNotNull(p2);
@@ -62,8 +52,8 @@ public class test {
 		assertNotNull(p6);
 		
 		//Insere e busca Copas
-		assertThat(controller.CadastrarCopa(2014, p1), is(true));
-		assertThat(controller.CadastrarCopa(2018, p4), is(true));
+		assertThat(controller.cadastrarCopa(2014, p1), is(true));
+		assertThat(controller.cadastrarCopa(2018, p4), is(true));
 		
 		c1 = controller.BuscarCopa(2014);
 		c2 = controller.BuscarCopa(2018);
@@ -73,14 +63,14 @@ public class test {
 		
 		//Insere e busca seleï¿½ï¿½es
 		
-		assertThat(controller.CadastrarSelecao("Brasil", 2014, "A", 4, p1),is(true));
-		assertThat(controller.CadastrarSelecao("Alemanha", 2014, "A", 1, p2),is(true));
-		assertThat(controller.CadastrarSelecao("Argentina", 2014, "A", 2, p3),is(true));
-		assertThat(controller.CadastrarSelecao("EUA", 2014, "A", 8, p4),is(true));
-		assertThat(controller.CadastrarSelecao("Inglaterra", 2014, "B", 6, p5),is(true));
-		assertThat(controller.CadastrarSelecao("Japao", 2014, "B", 7, p6),is(true));
-		assertThat(controller.CadastrarSelecao("Holanda", 2014, "B", 3, p7),is(true));
-		assertThat(controller.CadastrarSelecao("Costa Rica", 2014, "B", 5, p8),is(true));
+		assertThat(controller.cadastrarSelecao("Brasil", 2014, "A", 4, p1),is(true));
+		assertThat(controller.cadastrarSelecao("Alemanha", 2014, "A", 1, p2),is(true));
+		assertThat(controller.cadastrarSelecao("Argentina", 2014, "A", 2, p3),is(true));
+		assertThat(controller.cadastrarSelecao("EUA", 2014, "A", 8, p4),is(true));
+		assertThat(controller.cadastrarSelecao("Inglaterra", 2014, "B", 6, p5),is(true));
+		assertThat(controller.cadastrarSelecao("Japao", 2014, "B", 7, p6),is(true));
+		assertThat(controller.cadastrarSelecao("Holanda", 2014, "B", 3, p7),is(true));
+		assertThat(controller.cadastrarSelecao("Costa Rica", 2014, "B", 5, p8),is(true));
 		
 		s1 = controller.BuscarSelecao("Brasil", 2014);
 		s2 = controller.BuscarSelecao("Alemanha", 2014);
@@ -111,7 +101,7 @@ public class test {
 			j1[i].setNumero(i);
 			j1[i].setPosicao(posicao.GOLEIRO);
 			
-			assertThat(controller.CadastrarJogador("carinha"+i, c, i, posicao.GOLEIRO, s1),is(true));
+			assertThat(controller.cadastrarJogador("carinha"+i, c, i, posicao.GOLEIRO, s1),is(true));
 			
 			j2[i] = new Jogador();
 			j2[i].setNome("manolo"+i);
@@ -119,7 +109,7 @@ public class test {
 			j2[i].setNumero(i);
 			j2[i].setPosicao(posicao.MEIAARMADOR);
 			
-			assertThat(controller.CadastrarJogador("manolo"+i, c, i, posicao.MEIAARMADOR, s2),is(true));
+			assertThat(controller.cadastrarJogador("manolo"+i, c, i, posicao.MEIAARMADOR, s2),is(true));
 			
 			j3[i] = new Jogador();
 			j3[i].setNome("truta"+i);
@@ -127,7 +117,7 @@ public class test {
 			j3[i].setNumero(i);
 			j3[i].setPosicao(posicao.ZAGUEIRO);
 			
-			assertThat(controller.CadastrarJogador("truta"+i, c, i, posicao.ZAGUEIRO, s3),is(true));
+			assertThat(controller.cadastrarJogador("truta"+i, c, i, posicao.ZAGUEIRO, s3),is(true));
 			
 			j4[i] = new Jogador();
 			j4[i].setNome("brodinho"+i);
@@ -135,7 +125,7 @@ public class test {
 			j4[i].setNumero(i);
 			j4[i].setPosicao(posicao.VOLANTE);
 			
-			assertThat(controller.CadastrarJogador("brodinho"+i, c, i, posicao.VOLANTE, s4),is(true));
+			assertThat(controller.cadastrarJogador("brodinho"+i, c, i, posicao.VOLANTE, s4),is(true));
 			
 			j5[i] = new Jogador();
 			j5[i].setNome("dot"+i);
@@ -143,7 +133,7 @@ public class test {
 			j5[i].setNumero(i);
 			j5[i].setPosicao(posicao.MEIOCAMPISTALATERALESQUERDO);
 			
-			assertThat(controller.CadastrarJogador("dot"+i, c, i, posicao.MEIOCAMPISTALATERALESQUERDO, s5),is(true));
+			assertThat(controller.cadastrarJogador("dot"+i, c, i, posicao.MEIOCAMPISTALATERALESQUERDO, s5),is(true));
 			
 			j6[i] = new Jogador();
 			j6[i].setNome("line"+i);
@@ -151,7 +141,7 @@ public class test {
 			j6[i].setNumero(i);
 			j6[i].setPosicao(posicao.MEIOCAMPISTALATERALDIREITO);
 			
-			assertThat(controller.CadastrarJogador("line"+i, c, i, posicao.MEIOCAMPISTALATERALDIREITO, s6),is(true));
+			assertThat(controller.cadastrarJogador("line"+i, c, i, posicao.MEIOCAMPISTALATERALDIREITO, s6),is(true));
 			
 			j7[i] = new Jogador();
 			j7[i].setNome("exclamation"+i);
@@ -159,7 +149,7 @@ public class test {
 			j7[i].setNumero(i);
 			j7[i].setPosicao(posicao.PONTA);
 			
-			assertThat(controller.CadastrarJogador("exclamation"+i, c, i, posicao.PONTA, s7),is(true));
+			assertThat(controller.cadastrarJogador("exclamation"+i, c, i, posicao.PONTA, s7),is(true));
 			
 			j8[i] = new Jogador();
 			j8[i].setNome("interrogation"+i);
@@ -167,7 +157,7 @@ public class test {
 			j8[i].setNumero(i);
 			j8[i].setPosicao(posicao.LIBERO);
 			
-			assertThat(controller.CadastrarJogador("interrogation"+i, c, i, posicao.LIBERO, s8),is(true));
+			assertThat(controller.cadastrarJogador("interrogation"+i, c, i, posicao.LIBERO, s8),is(true));
 		}
 		
 		assertNotNull(controller.BuscarJogador("carinha0",s1));
@@ -181,14 +171,14 @@ public class test {
 		
 		//Insere e busca tecnicos
 		
-		assertThat(controller.CadastrarTecnico("Albertocheater", c, s1),is(true));
-		assertThat(controller.CadastrarTecnico("Lenoilluminati", c, s2),is(true));
-		assertThat(controller.CadastrarTecnico("Lucasnoob", c, s3),is(true));
-		assertThat(controller.CadastrarTecnico("Carinhaquemoralogoali", c, s4),is(true));
-		assertThat(controller.CadastrarTecnico("DotaehmelhorqueLoL", c, s5),is(true));
-		assertThat(controller.CadastrarTecnico("WoWsugaalmas", c, s6),is(true));
-		assertThat(controller.CadastrarTecnico("qwertyuiopissoasdfghjklehuma", c, s7),is(true));
-		assertThat(controller.CadastrarTecnico("zxcvbnmmensagemqazwsxedcrfvsubliminartgbyhnujm", c, s8),is(true));
+		assertThat(controller.cadastrarTecnico("Albertocheater", c, s1),is(true));
+		assertThat(controller.cadastrarTecnico("Lenoilluminati", c, s2),is(true));
+		assertThat(controller.cadastrarTecnico("Lucasnoob", c, s3),is(true));
+		assertThat(controller.cadastrarTecnico("Carinhaquemoralogoali", c, s4),is(true));
+		assertThat(controller.cadastrarTecnico("DotaehmelhorqueLoL", c, s5),is(true));
+		assertThat(controller.cadastrarTecnico("WoWsugaalmas", c, s6),is(true));
+		assertThat(controller.cadastrarTecnico("qwertyuiopissoasdfghjklehuma", c, s7),is(true));
+		assertThat(controller.cadastrarTecnico("zxcvbnmmensagemqazwsxedcrfvsubliminartgbyhnujm", c, s8),is(true));
 		
 		t1 = controller.BuscarTecnico("Albertocheater");
 		t2 = controller.BuscarTecnico("Lenoilluminati");
@@ -209,22 +199,22 @@ public class test {
 		assertThat(s8.getTecnico(),is(t8));
 	
 		//Insere selecoes na copa
-		controller.CadastrarSelecaoNaCopa(s1, 2014);
-		controller.CadastrarSelecaoNaCopa(s2, 2014);
-		controller.CadastrarSelecaoNaCopa(s3, 2014);
-		controller.CadastrarSelecaoNaCopa(s4, 2014);
-		controller.CadastrarSelecaoNaCopa(s5, 2014);
-		controller.CadastrarSelecaoNaCopa(s6, 2014);
-		controller.CadastrarSelecaoNaCopa(s7, 2014);
-		controller.CadastrarSelecaoNaCopa(s8, 2014);
-		controller.CadastrarSelecaoNaCopa(s1, 2018);
-		controller.CadastrarSelecaoNaCopa(s2, 2018);
-		controller.CadastrarSelecaoNaCopa(s3, 2018);
-		controller.CadastrarSelecaoNaCopa(s4, 2018);
-		controller.CadastrarSelecaoNaCopa(s5, 2018);
-		controller.CadastrarSelecaoNaCopa(s6, 2018);
-		controller.CadastrarSelecaoNaCopa(s7, 2018);
-		controller.CadastrarSelecaoNaCopa(s8, 2018);
+		controller.cadastrarSelecaoNaCopa(s1, 2014);
+		controller.cadastrarSelecaoNaCopa(s2, 2014);
+		controller.cadastrarSelecaoNaCopa(s3, 2014);
+		controller.cadastrarSelecaoNaCopa(s4, 2014);
+		controller.cadastrarSelecaoNaCopa(s5, 2014);
+		controller.cadastrarSelecaoNaCopa(s6, 2014);
+		controller.cadastrarSelecaoNaCopa(s7, 2014);
+		controller.cadastrarSelecaoNaCopa(s8, 2014);
+		controller.cadastrarSelecaoNaCopa(s1, 2018);
+		controller.cadastrarSelecaoNaCopa(s2, 2018);
+		controller.cadastrarSelecaoNaCopa(s3, 2018);
+		controller.cadastrarSelecaoNaCopa(s4, 2018);
+		controller.cadastrarSelecaoNaCopa(s5, 2018);
+		controller.cadastrarSelecaoNaCopa(s6, 2018);
+		controller.cadastrarSelecaoNaCopa(s7, 2018);
+		controller.cadastrarSelecaoNaCopa(s8, 2018);
 		
 		assertNotNull(controller.BuscarCopa(2014).getSelecoes());
 		assertNotNull(controller.BuscarCopa(2018).getSelecoes());
@@ -275,11 +265,11 @@ public class test {
 		assertNotNull(e41);
 		assertNotNull(e42);
 		
-		assertThat(controller.CadastrarJogo(d1, "FSA", fase.GRUPOS, s1, s2, e11, e12),is(true));
-		assertThat(controller.CadastrarJogo(d2, "SP", fase.GRUPOS, s3, s4, e21, e22),is(true));
-		assertThat(controller.CadastrarJogo(d3, "RJ", fase.GRUPOS, s5, s6, e31, e32),is(true));
-		assertThat(controller.CadastrarJogo(d4, "Acre", fase.GRUPOS, s7, s8, e41, e42),is(true));
-		assertThat(controller.CadastrarJogo(d5, "Seará", fase.FINAL, s2, s3, e51, e52),is(true));
+		assertThat(controller.cadastrarJogo(d1, "FSA", fase.GRUPOS, s1, s2, e11, e12),is(true));
+		assertThat(controller.cadastrarJogo(d2, "SP", fase.GRUPOS, s3, s4, e21, e22),is(true));
+		assertThat(controller.cadastrarJogo(d3, "RJ", fase.GRUPOS, s5, s6, e31, e32),is(true));
+		assertThat(controller.cadastrarJogo(d4, "Acre", fase.GRUPOS, s7, s8, e41, e42),is(true));
+		assertThat(controller.cadastrarJogo(d5, "Seará", fase.FINAL, s2, s3, e51, e52),is(true));
 		
 		g1 = controller.BuscarJogo("FSA", d1, s1, s2, fase.GRUPOS);
 		g2 = controller.BuscarJogo("SP", d2, s3, s4, fase.GRUPOS);

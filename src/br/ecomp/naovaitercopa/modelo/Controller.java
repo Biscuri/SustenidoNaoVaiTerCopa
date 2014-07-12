@@ -1,6 +1,8 @@
 package br.ecomp.naovaitercopa.modelo;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.ecomp.naovaitercopa.modelo.Jogador.Posicao;
@@ -13,8 +15,6 @@ import br.ecomp.naovaitercopa.modelo.dao.JogoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.PaisDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.SelecaoDAOHibernate;
 import br.ecomp.naovaitercopa.modelo.dao.TecnicoDAOHibernate;
-
-import java.util.LinkedList;
 
 /**
  * 
@@ -55,7 +55,7 @@ public class Controller {
 	 * @return true se foi possivel cadastrar , false se ja existia um pais
 	 *         cadastrado.
 	 */
-	public boolean CadastrarPais(String nome, String continente) {
+	public boolean cadastrarPais(String nome, String continente) {
 		Pais novo = new Pais();
 		novo.setNome(nome);
 		novo.setContinente(continente);
@@ -82,7 +82,7 @@ public class Controller {
 	 *            selecao a qual ele pertence
 	 * @return true se foi possivel cadastrar, false se ja havia sido cadastrado
 	 */
-	public void CadastrarJogador(String nome, Date data, int num,
+	public void cadastrarJogador(String nome, Date data, int num,
 			Posicao posicao, Selecao selecao) {
 		Jogador novo = new Jogador();
 		novo.setNome(nome);
@@ -90,6 +90,10 @@ public class Controller {
 		novo.setDataNascimento(data);
 		novo.setSelecao(selecao);
 		novo.setPosicao(posicao);
+		
+		if (jogadorDB.buscarJogador(novo.getId()) == null){
+			jogadorDB.adicionar(novo);
+		}
 	}
 
 	/**
@@ -103,7 +107,7 @@ public class Controller {
 	 *            time que ele treina
 	 * @return true se foi possivel cadastrar, false se n√£o foi possivel.
 	 */
-	public void CadastrarTecnico(String nome, Date data, Selecao time) {
+	public void cadastrarTecnico(String nome, Date data, Selecao time) {
 		Tecnico novo = new Tecnico();
 		novo.setNome(nome);
 		novo.setDataNascimento(data);
@@ -124,7 +128,7 @@ public class Controller {
 	 *            a qual pertence
 	 * @return true se foi possivel o cadastro, false se ja existia a selecao
 	 */
-	public boolean CadastrarSelecao(String nome, int ano, String grupo,
+	public boolean cadastrarSelecao(String nome, int ano, String grupo,
 			int posicao, Pais pais) {
 		Selecao nova = new Selecao();
 		nova.setNome(nome);
@@ -156,7 +160,7 @@ public class Controller {
 	 *            pais sede da copa
 	 * @return true se cadastrou,false se ja existia
 	 */
-	public boolean CadastrarCopa(int ano, Pais sede) {
+	public boolean cadastrarCopa(int ano, Pais sede) {
 		Copa nova = new Copa();
 		nova.setAno(ano);
 		nova.setPais(sede);
@@ -176,10 +180,11 @@ public class Controller {
 	 * @param ano
 	 *            ano da copa para busca
 	 */
-	public void CadastrarSelecaoNaCopa(Selecao selecao, int ano) {
+	public void cadastrarSelecaoNaCopa(Selecao selecao, int ano) {
 		Copa busca = copaDB.buscarCopa(ano);
-		if (busca != null) {
-			busca.addSelecao(selecao);
+		Selecao sd = selecaoDB.buscarSelecao(selecao.getPais().getNome(), ano);
+		if (busca != null && sd != null) {
+			busca.addSelecao(sd);
 		}
 	}
 
@@ -191,12 +196,12 @@ public class Controller {
 	 * @param ano
 	 *            ano da copa a ser buscada
 	 */
-	public void CadastrarJogoNaCopa(Jogo jogo, int ano) {
+	public void cadastrarJogoNaCopa(Jogo jogo, int ano) {
 		Copa busca = copaDB.buscarCopa(ano);
-		if (busca != null) {
-			busca.addJogo(jogo);
+		Jogo jogoD = jogoDB.buscarJogo(jogo.getId());
+		if (busca != null && jogoD != null) {
+			busca.addJogo(jogoD);
 		}
-
 	}
 
 	/**
@@ -218,7 +223,7 @@ public class Controller {
 	 *            Escalacao de jogadores do time B
 	 * @return true se foi possivel , false se nao
 	 */
-	public void CadastrarJogo(Date data, String local, fase fase,
+	public void cadastrarJogo(Date data, String local, fase fase,
 			Selecao selecaoA, Selecao selecaoB, Escalacao play1, Escalacao play2) {
 		Jogo novo = new Jogo();
 		novo.setData(data);
@@ -227,6 +232,7 @@ public class Controller {
 		novo.setSelecaoB(selecaoB);
 		novo.setEscalacaoA(play1);
 		novo.setEscalacaoB(play2);
+		jogoDB.adicionar(novo);
 	}
 
 	/**
@@ -474,6 +480,65 @@ public class Controller {
 					+ subs.getEntra().getNome());
 		}
 
+	}
+	
+	//TODO ALBERTO
+	public void listarGolsDeUmaPartida(Jogo jogod){
+		
+		Jogo jogo = jogoDB.buscarJogo(jogod.getId());
+
+		if(jogo != null){
+			jogo.getGols();
+			Iterator<Gol> it = jogo.getGols().iterator();
+			while(it.hasNext()){
+				System.out.println(it.next().toString());
+			}
+		}
+		else {
+			System.out.println("Partida inexistente");
+		}
+	}
+	
+	public int quantidadeDeJogosDeUmPais(String nome){
+		int i = 0;
+		Pais pais = paisDB.buscarPais(nome);
+		
+		if(pais != null){
+			Copa copa;
+			//Pega todas as copas do pais
+			Iterator<Copa> itC = pais.getCopas().iterator();
+			
+			while(itC.hasNext()){
+				copa = itC.next();
+				//pega todos os jogos da copa
+				Iterator<Jogo> itCJ = copa.getJogos().iterator();
+				while(itCJ.hasNext()){
+					//pergunta se a SelecaoA ou a SelecaoB È o pais escolhido
+					if(itCJ.next().getSelecaoA().getNome().equals(pais.getNome()) || itCJ.next().getSelecaoB().getNome().equals(pais.getNome())){
+						i++;
+					}
+				}
+
+			}
+		}
+		else {
+			return 0;
+		}
+		
+		return i;
+	}
+
+	public void listarJogosEmpatadosDaCopa(int ano){
+		Copa copa = copaDB.buscarCopa(ano);
+		if(copa != null){
+			Iterator<Jogo> it = copa.getJogos().iterator();
+			while(it.hasNext()){
+				Jogo jogo = it.next();
+				if(jogo.getGols().size() % 2 == 0){
+					System.out.println(jogo.toString());
+				}
+			}
+		}
 	}
 
 }

@@ -2,6 +2,7 @@ package br.ecomp.naovaitercopa.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -221,6 +222,21 @@ public class Jogo implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public String toString(){
+		int a = 0;
+		int b = 0;
+		Iterator<Gol> gol = gols.iterator();
+		while(gol.hasNext()){
+			if(gol.next().getJogador().getSelecao().equals(selecaoA)){
+				a++;
+			}
+			else {
+				b++;
+			}
+		}
+		return fase.toString() + " | " + data.toString() + " | " + selecaoA.getNome() + a +"x"+ b + selecaoB.getNome();
 	}
 
 	public enum fase {

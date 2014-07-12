@@ -8,7 +8,6 @@ public class Main {
 	public static void main(String[] args) {
             	
         Controller controller = new Controller();
-        controller.CadastrarJogador(null, null, 22, Jogador.posicao.GOLEIRO, null);
 	}
 
 }

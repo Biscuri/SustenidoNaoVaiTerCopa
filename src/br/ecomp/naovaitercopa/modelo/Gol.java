@@ -69,5 +69,16 @@ public class Gol implements Serializable {
 	public void setJogador(Jogador jogador) {
 		this.jogador = jogador;
 	}
+	
+	public String toString(){
+		String cp;
+		if(foiContra){
+			cp = "Contra";
+		}
+		else {
+			cp = "Pro";
+		}
+		return "Gol:" + selecao.getGrupo() + " | " + tempo.toString() + " | de " + jogador.getNome() + "["+cp+"]" ;
+	}
 
 }
