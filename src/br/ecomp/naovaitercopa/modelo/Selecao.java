@@ -30,6 +30,7 @@ public class Selecao implements Serializable {
 	private String grupo;
 	private int ano;
 	private int posicao;
+	private int cont = 0;
 
 	@OneToMany(mappedBy = "selecao")
 	@Column(name = "jogadores_s")

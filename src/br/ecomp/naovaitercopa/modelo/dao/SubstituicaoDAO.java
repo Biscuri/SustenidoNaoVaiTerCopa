@@ -12,7 +12,7 @@ public interface SubstituicaoDAO {
 	
 	public void atualizar(Substituicao substituicao);
 	
-	public Substituicao buscarSubstituicao(String nome);
+	public Substituicao buscarSubstituicao(long id);
 	
 	public List<Substituicao> listar();
 

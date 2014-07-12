@@ -12,7 +12,7 @@ public interface TecnicoDAO {
 	
 	public void atualizar(Tecnico tecnico);
 	
-	public Tecnico buscarTecnico(String nome);
+	public Tecnico buscarTecnico(long id);
 	
 	public List<Tecnico> listar();
 

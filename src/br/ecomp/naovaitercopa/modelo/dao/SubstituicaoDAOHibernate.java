@@ -1,8 +1,10 @@
 package br.ecomp.naovaitercopa.modelo.dao;
 
+
 import java.util.List;
 
 import org.hibernate.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,102 +13,79 @@ import br.ecomp.naovaitercopa.modelo.Substituicao;
 import br.ecomp.naovaitercopa.util.HibernateUtil;
 
 public class SubstituicaoDAOHibernate implements SubstituicaoDAO {
-
+	
 	Session sessao = null;
 	Transaction transacao = null;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.ecomp.naovaitercopa.modelo.SubstituicaoDAO#adicionar(br.ecomp.
-	 * naovaitercopa.modelo.Substituicao)
+	
+	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.SubstituicaoDAO#adicionar(br.ecomp.naivaitercopa.modelo.Substituicao)
 	 */
 	@Override
 	public void adicionar(Substituicao substituicao) {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
-
+					
 			transacao = (Transaction) sessao.beginTransaction();
 			sessao.save(substituicao);
 			transacao.commit();
 		} catch (HibernateException e) {
-			System.err
-					.println("Nao foi possivel inserir o substituicao. Erro: "
-							+ e.getMessage());
-		} finally {
+			System.err.println("Nao foi possivel inserir o substituicao. Erro: " + e.getMessage());
+		} 
+		finally {
 			try {
 				sessao.close();
 			} catch (Throwable e) {
-				System.err
-						.println("Erro ao fechar operacao de insercao. Mensagem: "
-								+ e.getMessage());
+				System.err.println("Erro ao fechar operacao de insercao. Mensagem: " + e.getMessage());				
 			}
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.ecomp.naovaitercopa.modelo.SubstituicaoDAO#atualizar(br.ecomp.
-	 * naovaitercopa.modelo.Substituicao)
+	
+	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.SubstituicaoDAO#atualizar(br.ecomp.naivaitercopa.modelo.Substituicao)
 	 */
 	@Override
 	public void atualizar(Substituicao substituicao) {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
-
+					
 			transacao = sessao.beginTransaction();
 			sessao.update(substituicao);
 			transacao.commit();
 		} catch (HibernateException e) {
-			System.err
-					.println("Nao foi possivel atualizar o substituicao. Erro: "
-							+ e.getMessage());
+			System.err.println("Nao foi possivel atualizar o substituicao. Erro: " + e.getMessage());
 		} finally {
 			try {
 				sessao.close();
 			} catch (Throwable e) {
-				System.err
-						.println("Erro ao fechar operacao de atualizacao. Mensagem: "
-								+ e.getMessage());
+				System.err.println("Erro ao fechar operacao de atualizacao. Mensagem: " + e.getMessage());				
 			}
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.ecomp.naovaitercopa.modelo.SubstituicaoDAO#remover(br.ecomp.naovaitercopa
-	 * .modelo.Substituicao)
+	
+	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.SubstituicaoDAO#remover(br.ecomp.naivaitercopa.modelo.Substituicao)
 	 */
 	@Override
 	public void remover(Substituicao substituicao) {
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
-
+					
 			transacao = sessao.beginTransaction();
 			sessao.delete(substituicao);
 			transacao.commit();
 		} catch (HibernateException e) {
-			System.err
-					.println("Nao foi possivel excluir o substituicao. Erro: "
-							+ e.getMessage());
+			System.err.println("Nao foi possivel excluir o substituicao. Erro: " + e.getMessage());
 		} finally {
 			try {
 				sessao.close();
 			} catch (Throwable e) {
-				System.err
-						.println("Erro ao fechar operacao de exclusao. Mensagem: "
-								+ e.getMessage());
+				System.err.println("Erro ao fechar operacao de exclusao. Mensagem: " + e.getMessage());				
 			}
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.ecomp.naovaitercopa.modelo.SubstituicaoDAO#removerTodos()
+	
+	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.SubstituicaoDAO#removerTodos()
 	 */
 	@Override
 	public void removerTodos() {
@@ -119,27 +98,21 @@ public class SubstituicaoDAOHibernate implements SubstituicaoDAO {
 			consulta.executeUpdate();
 			transacao.commit();
 		} catch (HibernateException e) {
-			System.err
-					.println("Nao foi possivel excluir os substituicaos. Erro: "
-							+ e.getMessage());
+			System.err.println("Nao foi possivel excluir os substituicaos. Erro: " + e.getMessage());
 		} finally {
 			try {
 				sessao.close();
 			} catch (Throwable e) {
-				System.err
-						.println("Erro ao fechar operacao de exclusao. Mensagem: "
-								+ e.getMessage());
+				System.err.println("Erro ao fechar operacao de exclusao. Mensagem: " + e.getMessage());				
 			}
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.ecomp.naovaitercopa.modelo.SubstituicaoDAO#listar()
+	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.SubstituicaoDAO#listar()
 	 */
 	@Override
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings({ "unchecked"})
 	public List<Substituicao> listar() {
 		List<Substituicao> resultado = null;
 		try {
@@ -148,57 +121,47 @@ public class SubstituicaoDAOHibernate implements SubstituicaoDAO {
 			Query consulta = (Query) sessao.createQuery("from Substituicao");
 
 			transacao = sessao.beginTransaction();
-			resultado = (List<Substituicao>) consulta.list();
+			resultado = (List<Substituicao>)consulta.list();
 			transacao.commit();
 			return resultado;
-		} catch (HibernateException e) {
-			System.err
-					.println("Nao foi possivel listar os substituicaos. Erro: "
-							+ e.getMessage());
+		} 
+		catch (HibernateException e) {
+			System.err.println("Nao foi possivel listar os substituicaos. Erro: " + e.getMessage());
 			throw new HibernateException(e);
-		} finally {
+		} 
+		finally {
 			try {
 				sessao.close();
 			} catch (Throwable e) {
-				System.err
-						.println("Erro ao fechar operacao de listagem. Mensagem: "
-								+ e.getMessage());
+				System.err.println("Erro ao fechar operacao de listagem. Mensagem: " + e.getMessage());				
 			}
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.ecomp.naovaitercopa.modelo.SubstituicaoDAO#buscarSubstituicao(java
-	 * .lang.String)
+	
+	/* (non-Javadoc)
+	 * @see br.ecomp.naivaitercopa.modelo.SubstituicaoDAO#buscarSubstituicao(java.lang.String)
 	 */
 	@Override
-	public Substituicao buscarSubstituicao(String nome) {
+	public Substituicao buscarSubstituicao(long id) {
 		Substituicao substituicao = null;
 		try {
 			sessao = HibernateUtil.getSessionFactory().openSession();
 
-			Query consulta = sessao
-					.createQuery("from Substituicao where nome = :parametro");
-			consulta.setString("parametro", nome);
+			Query consulta = sessao.createQuery("from Substituicao where id = :parametro");
+			consulta.setLong("parametro", id);
 
 			transacao = sessao.beginTransaction();
 			substituicao = (Substituicao) consulta.uniqueResult();
 			transacao.commit();
 			return substituicao;
-
+			
 		} catch (HibernateException e) {
-			System.err.println("Nao foi possivel buscar o substituicao. Erro: "
-					+ e.getMessage());
+			System.err.println("Nao foi possivel buscar o substituicao. Erro: " + e.getMessage());
 		} finally {
 			try {
 				sessao.close();
 			} catch (Throwable e) {
-				System.err
-						.println("Erro ao fechar operacao de busca. Mensagem: "
-								+ e.getMessage());
+				System.err.println("Erro ao fechar operacao de busca. Mensagem: " + e.getMessage());				
 			}
 		}
 		return substituicao;
